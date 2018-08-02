@@ -88,7 +88,7 @@ public class TransactionalService {
                 return Lists.newArrayList(branchService.findAll());
             }
             List<Branch> list = new ArrayList<>();
-            list.add(person.getBranch());
+            list.add(branchService.findOne(person.getBranch().getId()));
             list.addAll(branchAccessService.findByPerson(person).stream().map(BranchAccess::getBranch).collect(Collectors.toList()));
             return list.stream().distinct().collect(Collectors.toList());
         } catch (Exception ex) {
