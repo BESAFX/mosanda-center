@@ -167,6 +167,7 @@ app.controller("menuCtrl", [
         };
         $scope.openStatePerson = function () {
             $scope.toggleState = 'person';
+            $scope.fetchPersonTableData();
             $rootScope.refreshGUI();
         };
         $scope.openStateProfile = function () {

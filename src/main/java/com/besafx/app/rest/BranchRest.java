@@ -8,14 +8,12 @@ import com.besafx.app.entity.Branch;
 import com.besafx.app.entity.Person;
 import com.besafx.app.service.BranchService;
 import com.besafx.app.service.CompanyService;
-import com.besafx.app.service.PersonService;
 import com.besafx.app.ws.Notification;
 import com.besafx.app.ws.NotificationDegree;
 import com.besafx.app.ws.NotificationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.bohnman.squiggly.Squiggly;
 import com.github.bohnman.squiggly.util.SquigglyUtils;
-import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.security.Principal;
 
 @RestController
 @RequestMapping(value = "/api/branch/")
@@ -174,8 +171,11 @@ public class BranchRest {
     public void delete(@PathVariable Long id) {
         Branch branch = branchService.findOne(id);
         if (branch != null) {
+
             LOG.info("DELETE ALL OFFERS");
+
             LOG.info("DELETE ALL MASTERS");
+
             LOG.info("DELETE ALL PERSONS");
             branchService.delete(id);
 

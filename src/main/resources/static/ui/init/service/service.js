@@ -786,7 +786,6 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             controller: 'personCreateUpdateCtrl',
             backdrop: 'static',
             keyboard: false,
-            size: 'lg',
             resolve: {
                 title: function () {
                     return 'مستخدم جديد';
@@ -810,7 +809,6 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             controller: 'personCreateUpdateCtrl',
             backdrop: 'static',
             keyboard: false,
-            size: 'lg',
             resolve: {
                 title: function () {
                     return 'تعديل بيانات مستخدم';

@@ -29,6 +29,9 @@ public class TransactionalService {
     private BranchService branchService;
 
     @Autowired
+    private BranchAccessService branchAccessService;
+
+    @Autowired
     private MasterService masterService;
 
     @Autowired
@@ -38,10 +41,13 @@ public class TransactionalService {
     private AccountPaymentService accountPaymentService;
 
     @Autowired
+    private BankService bankService;
+
+    @Autowired
     private BankTransactionService bankTransactionService;
 
     @Transactional
-    public Integer getNextOfferCode(Branch branch){
+    public Integer getNextOfferCode(Branch branch) {
         Offer topOffer = offerService.findTopByMasterBranchOrderByCodeDesc(branch);
         if (topOffer == null) {
             return 1;
@@ -51,7 +57,7 @@ public class TransactionalService {
     }
 
     @Transactional
-    public Integer getNextAccountCode(Branch branch){
+    public Integer getNextAccountCode(Branch branch) {
         Account topAccount = accountService.findTopByCourseMasterBranchOrderByCodeDesc(branch);
         if (topAccount == null) {
             return 1;
@@ -61,7 +67,7 @@ public class TransactionalService {
     }
 
     @Transactional
-    public Long getNextAccountPaymentCode(Branch branch){
+    public Long getNextAccountPaymentCode(Branch branch) {
         AccountPayment topAccountPayment = accountPaymentService.findTopByAccountCourseMasterBranchOrderByCodeDesc(branch);
         if (topAccountPayment == null) {
             return Long.valueOf(1);
@@ -71,21 +77,22 @@ public class TransactionalService {
     }
 
     @Transactional
-    public List<Branch> getBranches(){
+    public List<Branch> getBranches() {
         return Lists.newArrayList(branchService.findAll());
     }
 
     @Transactional
-    public List<Branch> getPersonBranches(Person person){
+    public List<Branch> getPersonBranches(Person person) {
         try {
-            if(person.getTechnicalSupport()){
+            if (person.getTechnicalSupport()) {
                 return Lists.newArrayList(branchService.findAll());
             }
             List<Branch> list = new ArrayList<>();
             list.add(person.getBranch());
-            list.addAll(person.getBranchAccesses().stream().map(BranchAccess::getBranch).collect(Collectors.toList()));
+            list.addAll(branchAccessService.findByPerson(person).stream().map(BranchAccess::getBranch).collect(Collectors.toList()));
             return list.stream().distinct().collect(Collectors.toList());
         } catch (Exception ex) {
+            ex.printStackTrace();
             return null;
         }
     }
@@ -96,48 +103,54 @@ public class TransactionalService {
     }
 
     @Transactional
-    public List<Master> getMastersByBranch(Branch branch){
+    public List<Master> getMastersByBranch(Branch branch) {
         return masterService.findByBranch(branch);
     }
 
     @Transactional
     public List<Bank> fetchMyBanks(Person person) {
-        List<Bank> banks = getPersonBranches(person)
-                .stream()
-                .flatMap(branch -> branch.getBanks().stream())
-                .collect(Collectors.toList());
-        ListIterator<Bank> bankListIterator = banks.listIterator();
-        while (bankListIterator.hasNext()) {
-            Bank bank = bankListIterator.next();
+        try{
+            List<Branch> branches = getPersonBranches(person);
+            List<Bank> banks = branches
+                    .stream()
+                    .flatMap(branch -> bankService.findByBranch(branch).stream())
+                    .collect(Collectors.toList());
+            ListIterator<Bank> bankListIterator = banks.listIterator();
+            while (bankListIterator.hasNext()) {
+                Bank bank = bankListIterator.next();
 
-            Double depositAmount = bankTransactionService
-                    .findByBankAndTransactionTypeIn(bank, Lists.newArrayList(
-                            Initializer.transactionTypeDeposit,
-                            Initializer.transactionTypeDepositTransfer),
-                                                    BankTransactionAmount.class)
-                    .stream().mapToDouble(BankTransactionAmount::getAmount).sum();
+                Double depositAmount = bankTransactionService
+                        .findByBankAndTransactionTypeIn(bank, Lists.newArrayList(
+                                Initializer.transactionTypeDeposit,
+                                Initializer.transactionTypeDepositTransfer),
+                                                        BankTransactionAmount.class)
+                        .stream().mapToDouble(BankTransactionAmount::getAmount).sum();
 
-            Double withdrawAmount = bankTransactionService
-                    .findByBankAndTransactionTypeIn(bank, Lists.newArrayList(
-                            Initializer.transactionTypeWithdraw,
-                            Initializer.transactionTypeWithdrawTransfer,
-                            Initializer.transactionTypeExpense),
-                                                    BankTransactionAmount.class)
-                    .stream().mapToDouble(BankTransactionAmount::getAmount).sum();
+                Double withdrawAmount = bankTransactionService
+                        .findByBankAndTransactionTypeIn(bank, Lists.newArrayList(
+                                Initializer.transactionTypeWithdraw,
+                                Initializer.transactionTypeWithdrawTransfer,
+                                Initializer.transactionTypeExpense),
+                                                        BankTransactionAmount.class)
+                        .stream().mapToDouble(BankTransactionAmount::getAmount).sum();
 
-            LOG.info("مجموع الإيداعات = " + depositAmount);
-            bank.setTotalDeposits(depositAmount);
+                LOG.info("مجموع الإيداعات = " + depositAmount);
+                bank.setTotalDeposits(depositAmount);
 
-            LOG.info("مجموع السحبيات = " + withdrawAmount);
-            bank.setTotalWithdraws(withdrawAmount);
+                LOG.info("مجموع السحبيات = " + withdrawAmount);
+                bank.setTotalWithdraws(withdrawAmount);
 
-            bank.setBalance(depositAmount - withdrawAmount);
+                bank.setBalance(depositAmount - withdrawAmount);
+            }
+            return banks;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return null;
         }
-        return banks;
     }
 
     @Transactional
-    public String getContactFullName(Contact contact){
+    public String getContactFullName(Contact contact) {
         return contact.getFullName();
     }
 }

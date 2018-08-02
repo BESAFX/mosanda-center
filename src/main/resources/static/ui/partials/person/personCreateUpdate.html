@@ -1,4 +1,4 @@
-<form dir="rtl" name="from" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+<form dir="rtl" name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
       focus-group-head="loop" focus-group-tail="loop">
 
     <div class="modal-header mdl-color--primary mdl-navigation__link-active">
@@ -41,118 +41,147 @@
 
                         <div class="form-group row">
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="firstName" class="control-label">الاسم الأول </label>
                                 <input id="firstName"
                                        type="text"
                                        focus-autofocus="1"
                                        required="required"
                                        disable-validation-message=""
+                                       placeholder="اجباري"
                                        class="form-control"
                                        ng-model="person.contact.firstName">
                             </div>
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="secondName" class="control-label">اسم الاب </label>
                                 <input id="secondName"
                                        type="text"
                                        class="form-control"
+                                       placeholder="اختياري"
                                        ng-model="person.contact.secondName">
                             </div>
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="thirdName" class="control-label">اسم الجد </label>
                                 <input id="thirdName"
                                        type="text"
                                        class="form-control"
+                                       placeholder="اختياري"
                                        ng-model="person.contact.thirdName">
                             </div>
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="forthName" class="control-label">اسم العائلة </label>
                                 <input id="forthName"
                                        type="text"
                                        required="required"
                                        disable-validation-message=""
                                        class="form-control"
+                                       placeholder="اجباري"
                                        ng-model="person.contact.forthName">
                             </div>
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="birthLocation" class="control-label">مكان الميلاد </label>
                                 <input id="birthLocation"
                                        type="text"
                                        class="form-control"
+                                       placeholder="اختياري"
                                        ng-model="person.contact.birthLocation">
                             </div>
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                <label for="endDate" class="control-label">تاريخ الميلاد</label>
-                                <div dir="ltr" class="input-group">
-                                    <input dir="rtl"
-                                           id="endDate"
-                                           type="text"
-                                           class="form-control is-calendarPicker"
-                                           ng-model="person.contact.birthDate"
-                                           calendarType="ummalqura"
-                                           language="en"
-                                           dateFormat="yyyy/mm/dd"
-                                           showOnFocus="false"
-                                           readonly="readonly"
-                                           kdatepicker>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-init="offer.date=now">
+                                <label for="birthDate" class="control-label">تاريخ الميلاد</label>
+                                <div dir="ltr" class="input-group" id="birthDate" ng-init="calendar1='G'">
+                                    <span class="input-group-addon">
+                                        <a href="" ng-click="calendar1==='G'?calendar1='H':calendar1='G'">
+                                            <span ng-show="calendar1==='G'">ميلادي</span>
+                                            <span ng-show="calendar1==='H'">هجري</span>
+                                        </a>
+                                    </span>
+                                    <div style="position: relative">
+                                        <input style="position: absolute" ng-show="calendar1==='H'"
+                                               type="text"
+                                               class="form-control is-calendarPicker animated-div"
+                                               ng-model="person.contact.birthDate"
+                                               calendarType="ummalqura"
+                                               language="ar"
+                                               dateFormat="yyyy/mm/dd"
+                                               showOnFocus="true"
+                                               pickerClass="myPicker"
+                                               placeholder="اختياري"
+                                               kdatepicker/>
+                                        <input style="position: absolute" ng-show="calendar1==='G'"
+                                               type="text"
+                                               class="form-control is-calendarPicker animated-div"
+                                               ng-model="person.contact.birthDate"
+                                               calendarType="gregorian"
+                                               language="ar-EG"
+                                               dateFormat="yyyy/mm/dd"
+                                               showOnFocus="true"
+                                               pickerClass="myPicker"
+                                               placeholder="اختياري"
+                                               kdatepicker/>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="nationality" class="control-label">الجنسية </label>
                                 <input id="nationality"
                                        type="text"
                                        class="form-control"
-                                       placeholder="الجنسية"
+                                       placeholder="اختياري"
                                        ng-model="person.contact.nationality">
                             </div>
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="identityNumber" class="control-label">رقم البطاقة</label>
                                 <input id="identityNumber"
                                        type="text"
                                        class="form-control"
+                                       placeholder="اختياري"
                                        ng-model="person.contact.identityNumber">
                             </div>
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="mobile" class="control-label">الجوال </label>
                                 <input id="mobile"
                                        type="text"
                                        required="required"
                                        disable-validation-message=""
                                        class="form-control"
+                                       placeholder="اختياري"
                                        ng-model="person.contact.mobile">
                             </div>
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="phone" class="control-label">الهاتف </label>
                                 <input id="phone"
                                        type="text"
                                        class="form-control"
+                                       placeholder="اختياري"
                                        ng-model="person.contact.phone">
                             </div>
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="qualification" class="control-label">المنصب الوظيفي </label>
                                 <input id="qualification"
                                        type="text"
                                        required="required"
                                        disable-validation-message=""
+                                       placeholder="اجباري"
                                        class="form-control"
                                        ng-model="person.contact.qualification">
                             </div>
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="address" class="control-label">العنوان الحالي </label>
                                 <input id="address"
                                        type="text"
                                        class="form-control"
+                                       placeholder="اختياري"
                                        ng-model="person.contact.address">
                             </div>
 
@@ -165,17 +194,16 @@
                         <div class="form-group row">
 
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <label for="branch" class="control-label">الفرع</label>
+                                <label for="branch" class="control-label">الفرع الرئيسي</label>
                                 <ui-select id="branch"
                                            ng-model="person.branch"
                                            required="required"
                                            disable-validation-message=""
                                            theme="bootstrap">
-                                    <ui-select-match placeholder="اختر الفرع">
+                                    <ui-select-match placeholder="اجباري">
                                         {{$select.selected.name}}
                                     </ui-select-match>
-                                    <ui-select-choices
-                                            repeat="branch in branches | filter: $select.search | orderBy:'code' track by branch.id">
+                                    <ui-select-choices repeat="branch in branches | filter: $select.search | orderBy:'code' track by branch.id">
 
                                         <div class="mdl-menu__item--full-bleed-divider"></div>
                                         <li class="mdl-list__item mdl-list__item--two-line"
@@ -202,7 +230,7 @@
                                            required="required"
                                            disable-validation-message=""
                                            theme="bootstrap">
-                                    <ui-select-match placeholder="اختر المجموعة">
+                                    <ui-select-match placeholder="اجباري">
                                         {{$select.selected.name}}
                                     </ui-select-match>
                                     <ui-select-choices
@@ -236,7 +264,7 @@
                                            required="required"
                                            disable-validation-message=""
                                            theme="bootstrap">
-                                    <ui-select-match placeholder="اختر الفروع">
+                                    <ui-select-match placeholder="اختياري">
                                         <li class="mdl-list__item mdl-list__item--two-line" style="padding: unset;cursor: pointer">
                                             <span class="mdl-list__item-primary-content">
                                             <span class="material-icons mdl-list__item-avatar" style="background-color: unset;background-image: url('/ui/img/{{iconSet}}/branch.{{iconSetType}}')"></span>
@@ -248,8 +276,7 @@
                                             </span>
                                         </li>
                                     </ui-select-match>
-                                    <ui-select-choices
-                                            repeat="branch in branches | filter: $select.search | orderBy:'code' track by branch.id">
+                                    <ui-select-choices repeat="branch in branches | filter: $select.search | orderBy:'code' track by branch.id">
 
                                         <div class="mdl-menu__item--full-bleed-divider"></div>
                                         <li class="mdl-list__item mdl-list__item--two-line" style="padding: unset;cursor: pointer">
@@ -275,7 +302,7 @@
                                        type="text"
                                        required="required"
                                        disable-validation-message=""
-                                       class="form-control text-left"
+                                       class="form-control"
                                        ng-model="person.email">
                             </div>
 
@@ -286,7 +313,7 @@
                                        type="password"
                                        required="required"
                                        disable-validation-message=""
-                                       class="form-control text-left"
+                                       class="form-control"
                                        ng-model="person.password">
                             </div>
 

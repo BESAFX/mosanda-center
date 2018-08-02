@@ -1,5 +1,6 @@
 package com.besafx.app.rest;
 
+import com.besafx.app.auditing.EntityHistoryListener;
 import com.besafx.app.auditing.PersonAwareUserDetails;
 import com.besafx.app.config.CustomException;
 import com.besafx.app.entity.BranchAccess;
@@ -24,9 +25,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.ListIterator;
 import java.util.stream.Collectors;
@@ -34,6 +35,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/api/person/")
 public class PersonRest {
+
+    private final static Logger LOG = LoggerFactory.getLogger(PersonRest.class);
 
     public static final String FILTER_TABLE = "" +
             "**," +
@@ -45,8 +48,6 @@ public class PersonRest {
             "id," +
             "email," +
             "contact[id,shortName,mobile]";
-
-    private final static Logger log = LoggerFactory.getLogger(PersonRest.class);
 
     @Autowired
     private PersonService personService;
@@ -63,9 +64,13 @@ public class PersonRest {
     @Autowired
     private NotificationService notificationService;
 
-    @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Autowired
+    private EntityHistoryListener entityHistoryListener;
+
+    @PostMapping(value = "create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_PERSON_CREATE')")
+    @Transactional
     public String create(@RequestBody Person person) {
         if (personService.findByEmail(person.getEmail()) != null) {
             throw new CustomException("هذا البريد الإلكتروني غير متاح ، فضلاً ادخل بريد آخر غير مستخدم");
@@ -75,14 +80,19 @@ public class PersonRest {
             person.setContact(contactService.save(person.getContact()));
         }
         person.setTokenExpired(false);
+        person.setTechnicalSupport(false);
         person.setActive(false);
         person.setEnabled(true);
-        person.setOptions(JSONConverter.toString(Options.builder()
-                .lang("AR")
-                .dateType("H")
-                .iconSet("icon-set-2")
-                .iconSetType("png")
-                .style("mdl-style-1")));
+        person.setHiddenPassword(person.getPassword());
+        person.setOptions(JSONConverter
+                                  .toString(Options.builder()
+                                                   .lang("AR")
+                                                   .style("mdl-style")
+                                                   .dateType("G")
+                                                   .iconSet("icon-set-2")
+                                                   .iconSetType("png")
+                                                   .build())
+                         );
         person = personService.save(person);
         ListIterator<BranchAccess> listIterator = person.getBranchAccesses().listIterator();
         while (listIterator.hasNext()) {
@@ -90,13 +100,29 @@ public class PersonRest {
             branchAccess.setPerson(person);
             branchAccessService.save(branchAccess);
         }
-        notificationService.notifyAll(Notification.builder().message("تم إنشاء حساب شخصي بنجاح").type(NotificationDegree.success).build());
+
+        Person caller = ((PersonAwareUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getPerson();
+        StringBuilder builder = new StringBuilder();
+        builder.append("إنشاء المستخدم ");
+        builder.append(" ( " + person.getContact().getFirstName().concat(person.getContact().getForthName()) + " ) ");
+        builder.append("، بواسطة ");
+        builder.append(caller.getContact().getShortName());
+        notificationService.notifyAll(Notification
+                                              .builder()
+                                              .title("العمليات على المستخدمين")
+                                              .message(builder.toString())
+                                              .type(NotificationDegree.success)
+                                              .icon("add")
+                                              .build());
+        entityHistoryListener.perform(builder.toString());
+
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), person);
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_PERSON_UPDATE')")
+    @Transactional
     public String update(@RequestBody Person person) {
         Person object = personService.findOne(person.getId());
         if (object != null) {
@@ -121,9 +147,10 @@ public class PersonRest {
         }
     }
 
-    @RequestMapping(value = "updateProfile", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "updateProfile", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
+    @Transactional
     public String updateProfile(@RequestBody Person person) {
         Person object = personService.findOne(person.getId());
         if (object != null) {
@@ -140,9 +167,10 @@ public class PersonRest {
         }
     }
 
-    @RequestMapping(value = "enable", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "enable", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_PERSON_ENABLE')")
+    @Transactional
     public String enable(@RequestBody Person person) {
         Person object = personService.findOne(person.getId());
         if (object != null) {
@@ -155,9 +183,10 @@ public class PersonRest {
         }
     }
 
-    @RequestMapping(value = "disable", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "disable", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_PERSON_DISABLE')")
+    @Transactional
     public String disable(@RequestBody Person person) {
         Person object = personService.findOne(person.getId());
         if (object != null) {
@@ -170,7 +199,7 @@ public class PersonRest {
         }
     }
 
-    @RequestMapping(value = "setDateType/{type}", method = RequestMethod.GET)
+    @GetMapping(value = "setDateType/{type}")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
     public void setDateType(@PathVariable(value = "type") String type) {
@@ -184,7 +213,7 @@ public class PersonRest {
         personService.save(caller);
     }
 
-    @RequestMapping(value = "setStyle/{style}", method = RequestMethod.GET)
+    @GetMapping(value = "setStyle/{style}")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
     @Transactional
@@ -196,7 +225,7 @@ public class PersonRest {
         personService.save(caller);
     }
 
-    @RequestMapping(value = "setIconSet/{iconSet}/{iconSetType}", method = RequestMethod.GET)
+    @GetMapping(value = "setIconSet/{iconSet}/{iconSetType}")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
     @Transactional
@@ -209,38 +238,38 @@ public class PersonRest {
         personService.save(caller);
     }
 
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
+    @GetMapping(value = "delete/{id}")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_PERSON_DELETE')")
     public void delete(@PathVariable Long id) {
 
     }
 
-    @RequestMapping(value = "findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "findAll", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String findAll() {
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), Lists.newArrayList(personService.findByEnabledIsTrue()));
     }
 
-    @RequestMapping(value = "findAllCombo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "findAllCombo", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String findAllCombo() {
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_PERSON_COMBO), Lists.newArrayList(personService.findByEnabledIsTrue()));
     }
 
-    @RequestMapping(value = "findOne/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "findOne/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String findOne(@PathVariable Long id) {
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), personService.findOne(id));
     }
 
-    @RequestMapping("findAuthorities")
+    @GetMapping("findAuthorities")
     @ResponseBody
     public String findAuthorities(Authentication authentication) {
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), authentication.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList()));
     }
 
-    @RequestMapping("findActivePerson")
+    @GetMapping("findActivePerson")
     @ResponseBody
     public String findActivePerson(Principal principal) {
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), personService.findByEmail(principal.getName()));

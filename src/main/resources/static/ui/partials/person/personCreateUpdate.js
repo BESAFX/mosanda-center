@@ -2,7 +2,9 @@ app.controller('personCreateUpdateCtrl', ['TeamService', 'BranchService', 'Perso
     function (TeamService, BranchService, PersonService, FileUploader, FileService, $scope, $rootScope, $timeout, $log, $uibModalInstance, title, action, person) {
 
         $scope.buffer = {};
+
         $scope.buffer.branchList = [];
+
         $scope.person = person;
 
         if($scope.person.id){
@@ -44,7 +46,7 @@ app.controller('personCreateUpdateCtrl', ['TeamService', 'BranchService', 'Perso
             TeamService.findAll().then(function (data) {
                 $scope.teams = data;
             });
-            BranchService.findAllCombo().then(function (data) {
+            BranchService.fetchBranchCombo().then(function (data) {
                 $scope.branches = data;
             });
             window.componentHandler.upgradeAllRegistered();
