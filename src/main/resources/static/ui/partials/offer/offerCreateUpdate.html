@@ -1,0 +1,309 @@
+<form dir="rtl" name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+      focus-group-head="loop" focus-group-tail="loop">
+
+    <div class="modal-header mdl-color--primary mdl-navigation__link-active">
+        <a class="pull-left" href="" ng-click="cancel()">
+            <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/close.{{iconSetType}}" width="24" height="24">
+        </a>
+        <h3 class="panel-title mdl-list__item pull-right mdl-color-text--white">
+            <span class="mdl-list__item-primary-content">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/offer.{{iconSetType}}" width="24" height="24">
+                <strong>{{title}}</strong>
+            </span>
+        </h3>
+    </div>
+
+    <div class="modal-body modal-body-free" id="modal-body">
+
+        <div class="row">
+
+            <div class="form-group row" ng-show="form.$invalid && form.$submitted">
+                <div class="alert alert-danger" role="alert">
+                    <strong>فضلاً اكمل الحقول المطلوبة</strong>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+
+                    <div class="mdl-tabs__tab-bar">
+                        <a href="#panel-1-offer" class="mdl-tabs__tab col-xs-6 col-sm-6 col-md-6 col-lg-6 is-active">
+                            <span>البيانات الاساسية</span>
+                        </a>
+                        <a href="#panel-2-offer" class="mdl-tabs__tab col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <span>طريقة الدفع</span>
+                        </a>
+                    </div>
+
+                    <div class="mdl-tabs__panel is-active" id="panel-1-offer">
+
+                        <div class="form-group row">
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-init="offer.date=now">
+                                <label for="date" class="control-label">تاريخ العرض</label>
+                                <div dir="ltr" class="input-group" id="date" ng-init="calendar1='G'">
+                                    <span class="input-group-addon">
+                                        <a href="" ng-click="calendar1==='G'?calendar1='H':calendar1='G'">
+                                            <span ng-show="calendar1==='G'">ميلادي</span>
+                                            <span ng-show="calendar1==='H'">هجري</span>
+                                        </a>
+                                    </span>
+                                    <div style="position: relative">
+                                        <input style="position: absolute" ng-show="calendar1==='H'"
+                                               type="text"
+                                               class="form-control is-calendarPicker animated-div"
+                                               ng-model="offer.date"
+                                               calendarType="ummalqura"
+                                               language="ar"
+                                               dateFormat="yyyy/mm/dd"
+                                               showOnFocus="true"
+                                               pickerClass="myPicker"
+                                               required="required"
+                                               disable-validation-message=""
+                                               kdatepicker/>
+                                        <input style="position: absolute" ng-show="calendar1==='G'"
+                                               type="text"
+                                               class="form-control is-calendarPicker animated-div"
+                                               ng-model="offer.date"
+                                               calendarType="gregorian"
+                                               language="ar-EG"
+                                               dateFormat="yyyy/mm/dd"
+                                               showOnFocus="true"
+                                               pickerClass="myPicker"
+                                               required="required"
+                                               disable-validation-message=""
+                                               kdatepicker/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label for="master" class="control-label">التخصص</label>
+                                <ui-select id="master"
+                                           ng-model="offer.master"
+                                           required="required"
+                                           disable-validation-message=""
+                                           theme="bootstrap">
+                                    <ui-select-match placeholder="اختر التخصص">
+                                        [{{$select.selected.code}}] {{$select.selected.name}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                            group-by="groupByBranch"
+                                            repeat="master in masters | filter: $select.search | orderBy:'code' track by master.id">
+
+                                        <div class="mdl-menu__item--full-bleed-divider"></div>
+                                        <li class="mdl-list__item mdl-list__item--two-line" style="padding: unset;cursor: pointer">
+                                            <span class="mdl-list__item-primary-content">
+                                                <span class="material-icons mdl-list__item-avatar"
+                                                      style="background-color: unset;background-image: url('/ui/img/{{iconSet}}/master.{{iconSetType}}')"></span>
+                                                <div ng-bind-html="master.name | highlight: $select.search"></div>
+                                                <span class="mdl-list__item-sub-title">
+                                                    <span>رقم التخصص / </span>
+                                                    {{master.code}}
+                                                </span>
+                                                <span class="mdl-list__item-sub-title">
+                                                    <span>الاسم / </span>
+                                                    {{master.name}}
+                                                </span>
+                                            </span>
+                                        </li>
+
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label for="customerName" class="control-label">اسم العميل </label>
+                                <input id="customerName"
+                                       type="text"
+                                       required="required"
+                                       disable-validation-message=""
+                                       class="form-control"
+                                       placeholder="اسم العميل..."
+                                       ng-model="offer.customerName">
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label for="identityNumber" class="control-label">رقم البطاقة / الإقامة</label>
+                                <input id="identityNumber"
+                                       type="text"
+                                       class="form-control "
+                                       placeholder="رقم البطاقة..."
+                                       ng-model="offer.customerIdentityNumber">
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label for="mobile" class="control-label">رقم الجوال</label>
+                                <input id="mobile"
+                                       type="text"
+                                       required="required"
+                                       disable-validation-message=""
+                                       class="form-control "
+                                       placeholder="رقم الجوال..."
+                                       ng-model="offer.customerMobile">
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label for="note" class="control-label">ملاحظات </label>
+                                <textarea id="note"
+                                          type="text"
+                                          msd-elastic="\n"
+                                          class="form-control"
+                                          placeholder="اذكر باختصار ملاحظات العرض"
+                                          ng-model="offer.note">
+                            </textarea>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mdl-tabs__panel" id="panel-2-offer">
+
+                        <div class="form-group row">
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-init="offer.paymentType='Cash'">
+                                <label for="offerType" class="control-label">طريقة الدفع</label>
+                                <select id="offerType"
+                                        required="required"
+                                        disable-validation-message=""
+                                        class="form-control"
+                                        ng-model="offer.paymentType">
+                                    <option value="Cash">نقدي</option>
+                                    <option value="Premium">أقساط</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <label for="price" class="control-label"> المبلغ نقدا </label>
+                                <div dir="ltr" class="input-group" id="price">
+                                    <span class="input-group-addon">ريال سعودي</span>
+                                    <input required="required"
+                                           disable-validation-message=""
+                                           type="number"
+                                           min="0"
+                                           class="form-control "
+                                           ng-model="offer.price">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                 ng-show="offer.paymentType==='Cash'">
+                                <label for="discount" class="control-label"> نسبة الخصم </label>
+                                <div dir="ltr" class="input-group" id="discount">
+                                    <span class="input-group-addon">%</span>
+                                    <input
+                                            ng-required="offer.paymentType==='Cash'"
+                                            disable-validation-message=""
+                                            type="number"
+                                            min="0"
+                                            max="100"
+                                            class="form-control "
+                                            ng-model="offer.discount">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                 ng-show="offer.paymentType!='Cash'">
+                                <label for="profit" class="control-label"> نسبة الفائدة </label>
+                                <div dir="ltr" class="input-group" id="profit">
+                                    <span class="input-group-addon">%</span>
+                                    <input
+                                            ng-required="offer.paymentType!='Cash'"
+                                            disable-validation-message=""
+                                            type="number"
+                                            min="0"
+                                            max="100"
+                                            class="form-control"
+                                            ng-model="offer.profit">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                 ng-show="offer.paymentType!='Cash'">
+                                <label for="premiumAmount" class="control-label"> قيمة القسط </label>
+                                <div dir="ltr" class="input-group" id="premiumAmount">
+                                    <span class="input-group-addon">ريال سعودي</span>
+                                    <input type="number"
+                                           min="0"
+                                           max="{{offer.price}}"
+                                           class="form-control "
+                                           ng-model="offer.premiumAmount"
+                                           ng-required="offer.paymentType!='Cash'"
+                                           disable-validation-message="">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                 ng-show="offer.paymentType==='Cash'">
+                                <label for="priceAfterDiscount" class="control-label"> المبلغ بعد الخصم </label>
+                                <div dir="ltr" class="input-group"
+                                     id="priceAfterDiscount">
+                                    <span class="input-group-addon">ريال سعودي</span>
+                                    <input type="number"
+                                           readonly="readonly"
+                                           class="form-control "
+                                           ng-value="offer.price - (offer.price * offer.discount / 100)">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                 ng-show="offer.paymentType!='Cash'">
+                                <label for="priceAfterProfit" class="control-label"> المبلغ بعد الفائدة </label>
+                                <div dir="ltr" class="input-group" id="priceAfterProfit">
+                                    <span class="input-group-addon">ريال سعودي</span>
+                                    <input readonly="readonly"
+                                           class="form-control "
+                                           ng-value="offer.price + (offer.price * offer.profit / 100)">
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+        <div class="row">
+            <button ng-if="action=='create'"
+                    uib-tooltip="اضافة"
+                    tooltip-append-to-body="true"
+                    type="submit"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/add.{{iconSetType}}" width="24" height="24">
+            </button>
+            <button ng-if="action=='update'"
+                    uib-tooltip="تعديل"
+                    tooltip-append-to-body="true"
+                    type="submit"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/edit.{{iconSetType}}" width="24" height="24">
+            </button>
+            <button uib-tooltip="مسح الحقول"
+                    tooltip-append-to-body="true"
+                    type="reset"
+                    ng-click="clear();form.$setPristine();"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/delete.{{iconSetType}}" width="24" height="24">
+            </button>
+            <button uib-tooltip="خروج"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-click="cancel()"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/close.{{iconSetType}}" width="24" height="24">
+            </button>
+        </div>
+
+    </div>
+
+</form>

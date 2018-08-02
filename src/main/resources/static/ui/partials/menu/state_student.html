@@ -1,0 +1,297 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="panel panel-body">
+        <div class="row">
+            <ul dir="rtl" class="breadcrumb">
+                <li>
+                    <a href="" ng-click="openStateMenu()">الرئيسية</a>
+                </li>
+                <li ng-repeat="item in itemsStudent | orderBy:'id' track by item.id">
+                    <a ng-if="item.type==='link'" href="" ui-sref="{{item.link}}">{{item.name}}</a>
+                    <span ng-if="item.type==='title'" style="{{item.style}}">{{item.name}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+
+            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 pull-right">
+                <button id="student-menu-lower-right" style="width: 100%;"
+                        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                    <span>العمليات</span>
+                </button>
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                    for="student-menu-lower-right">
+
+                    <li class="mdl-menu__item mdl-list__item"
+                        ng-click="openFilterStudent()">
+                        <span class="mdl-list__item-primary-content">
+                            <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/search.{{iconSetType}}" width="24" height="24">
+                            <span>بحث</span>
+                        </span>
+                    </li>
+
+                    <div class="mdl-menu__item--full-bleed-divider"></div>
+
+                    <li class="mdl-menu__item mdl-list__item" ng-click="newStudent()"
+                        ng-if="contains(me.team.authorities, ['ROLE_STUDENT_CREATE'])">
+                        <span class="mdl-list__item-primary-content">
+                            <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/add.{{iconSetType}}" width="24" height="24">
+                            <span>طالب جديد</span>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="pull-left" ng-init="toggleList=1">
+                <div class="btn-toolbar">
+                    <div class="btn-group" data-toggle="buttons">
+                        <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
+                                type="button" ng-click="toggleList=1"
+                                ng-class="{'mdl-color--primary-dark':toggleList===1}">
+                            <input type="radio" name="options"/>
+                            <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/reorder.{{iconSetType}}" width="24" height="24">
+                        </button>
+                        <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
+                                type="button" ng-click="toggleList=2"
+                                ng-class="{'mdl-color--primary-dark':toggleList===2}">
+                            <input type="radio" name="options"/>
+                            <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/module.{{iconSetType}}" width="24" height="24">
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <ul class="panel-controls pull-left"
+                style="margin-top: 2px;">
+                <li>
+                    <a href=""
+                       ng-click="openFilterStudent()"
+                       tooltip-append-to-body="true"
+                       uib-tooltip="بحث">
+                        <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/search.{{iconSetType}}" width="24" height="24">
+                    </a>
+                    <a href=""
+                       ng-show="contains(me.team.authorities, ['ROLE_STUDENT_CREATE'])"
+                       ng-click="newStudent()"
+                       tooltip-append-to-body="true"
+                       uib-tooltip="طالب جديد">
+                        <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/add.{{iconSetType}}" width="24" height="24">
+                    </a>
+                    <a href=""
+                       ng-show="contains(me.team.authorities, ['ROLE_STUDENT_CREATE'])"
+                       ng-click="newStudentBatch()"
+                       tooltip-append-to-body="true"
+                       uib-tooltip="طلاب جديد">
+                        <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/add.{{iconSetType}}" width="24" height="24">
+                    </a>
+                </li>
+            </ul>
+            <div class="panel-title-box pull-right">
+                <h3>قائمة الطلاب</h3>
+                <span>البيانات الشخصية وبيانات الاتصال للطلاب</span>
+            </div>
+        </div>
+        <div class="panel-body">
+
+            <div class="form-group row" ng-if="pageStudent.totalElements > 0">
+
+                <div class="btn-toolbar pull-right">
+
+                    <div class="btn-group" data-toggle="buttons">
+
+                        <button uib-tooltip="السابق"
+                                tooltip-append-to-body="true"
+                                ng-disabled="pageStudent.first"
+                                type="button"
+                                ng-click="selectPrevStudentsPage()"
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1 pull-right">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </button>
+
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-left">
+                            <input dir="rtl"
+                                   type="text"
+                                   readonly
+                                   class="form-control"
+                                   ng-model="pageStudent.currentPageString">
+                        </div>
+
+                        <button uib-tooltip="التالي"
+                                tooltip-append-to-body="true"
+                                ng-disabled="pageStudent.last"
+                                type="button"
+                                ng-click="selectNextStudentsPage()"
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1 pull-right">
+                            <i class="material-icons">keyboard_arrow_left</i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="pull-left">
+
+                    <input type="text"
+                           class="form-control"
+                           placeholder="بحث سريع"
+                           ng-change="refreshGUI()"
+                           ng-model="paramStudent.searchText">
+
+                </div>
+
+            </div>
+
+            <div class="form-group row" ng-show="toggleList===1">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+
+                            <th class="fit no-print">
+                                <label id ="checkAllStudents" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-0">
+                                    <input type="checkbox" id="checkbox-0" class="mdl-checkbox__input" ng-model="students.checkAll" ng-change="checkAllStudents()">
+                                </label>
+                            </th>
+
+                            <th>
+                                <span>#</span>
+                            </th>
+
+                            <th>
+                                <span>الاسم</span>
+                            </th>
+
+                            <th>
+                                <span>رقم البطاقة</span>
+                            </th>
+
+                            <th>
+                                <span>رقم الجوال</span>
+                            </th>
+
+                            <th>
+                                <span>تاريخ آخر تعديل</span>
+                            </th>
+
+                            <th>
+                                <span>بواسطة</span>
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="student in students | filter:paramStudent.searchText"
+                            ng-class="{'mdl-color--grey-400' : student.isSelected}"
+                            context-menu="rowMenuStudent">
+                            <td class="fit no-print">
+                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect check" for="checkbox-student-{{student.id}}">
+                                    <input type="checkbox" id="checkbox-student-{{student.id}}" class="mdl-checkbox__input" ng-model="student.isSelected" ng-click="checkStudent()">
+                                </label>
+                            </td>
+                            <td>{{$index+1}}</td>
+                            <td>{{student.contact.fullName}}</td>
+                            <td>{{student.contact.identityNumber}}</td>
+                            <td>{{student.contact.mobile}}</td>
+                            <td>
+                                <span ng-class="{'no-print': dateType==='G'}" ng-show="dateType==='H'">{{student.lastUpdate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                <span ng-class="{'no-print': dateType==='H'}" ng-show="dateType==='G'">{{student.lastUpdate | date: 'yyyy-MM-dd'}}</span>
+                                <br/>
+                                <span class="label label-success">{{student.lastUpdate | date: 'hh:mm a'}}</span>
+                            </td>
+                            <td>{{student.lastPerson.contact.shortName}}</td>
+                        </tr>
+                        <tr class="blank_row no-print" style="height: 10px !important; background-color: #FFFFFF;"
+                            ng-show="!students || students.length ==0">
+                            <td colspan="7">لا توجد بيانات</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="form-group row" ng-show="toggleList===2">
+
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="student in students">
+                    <!-- CONTACT ITEM -->
+                    <div class="panel panel-default">
+                        <div class="panel-body profile">
+                            <div class="profile-image">
+                                <img width="100" height="100"
+                                     ng-src="/ui/img/{{iconSet}}/student.{{iconSetType}}"
+                                     alt="{{student.code}}"/>
+                            </div>
+                            <div class="profile-data">
+                                <div class="profile-data-name">
+                                    {{student.name}}
+                                </div>
+                            </div>
+                            <div class="profile-controls">
+                                <!--<a href="" class="profile-control-left"><span class="fa fa-info-circle"></span></a>-->
+                                <!--<a href="" class="profile-control-right"><span class="fa fa-phone"></span></a>-->
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="contact-info">
+                                <p>
+                                    <strong>اسم الطالب</strong>
+                                    {{student.contact.fullName}}
+                                </p>
+                                <hr>
+                                <p>
+                                    <strong>رقم الجوال</strong>
+                                    {{student.contact.mobile}}
+                                </p>
+                                <hr>
+                                <p>
+                                    <a href="" ng-click="ModalProvider.openStudentDetailsModel(student);"><strong>المزيد...</strong></a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="row">
+                                <button uib-tooltip="طالب جديد"
+                                        tooltip-append-to-body="true"
+                                        type="button"
+                                        ng-if="contains(me.team.authorities, ['ROLE_STUDENT_CREATE'])"
+                                        ng-click="newStudent();"
+                                        class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/add.{{iconSetType}}" width="24" height="24">
+                                </button>
+                                <button uib-tooltip="تعديل"
+                                        tooltip-append-to-body="true"
+                                        type="button"
+                                        ng-if="contains(me.team.authorities, ['ROLE_STUDENT_UPDATE'])"
+                                        ng-click="ModalProvider.openStudentUpdateModel(student)"
+                                        class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/edit.{{iconSetType}}" width="24" height="24">
+                                </button>
+                                <button uib-tooltip="حذف"
+                                        tooltip-append-to-body="true"
+                                        type="button"
+                                        ng-if="contains(me.team.authorities, ['ROLE_STUDENT_DELETE'])"
+                                        ng-click="deleteStudent(student)"
+                                        class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                    <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/delete.{{iconSetType}}" width="24" height="24">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END CONTACT ITEM -->
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

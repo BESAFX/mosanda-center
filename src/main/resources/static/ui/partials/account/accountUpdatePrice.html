@@ -1,0 +1,151 @@
+<form dir="rtl" name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+      focus-group-head="loop" focus-group-tail="loop">
+
+    <div class="modal-header mdl-color--primary mdl-navigation__link-active">
+        <a class="pull-left" href="" ng-click="cancel()">
+            <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/close.{{iconSetType}}" width="24" height="24">
+        </a>
+        <h3 class="panel-title mdl-list__item pull-right mdl-color-text--white">
+            <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon mdl-color-text--white">edit</i>
+                <strong>تعديل رسوم التسجيل رقم / {{account.code}}</strong>
+            </span>
+        </h3>
+    </div>
+
+    <div class="modal-body" id="modal-body">
+
+        <div class="row">
+
+            <div class="form-group col-md-12" ng-show="form.$invalid && form.$submitted">
+                <div class="alert alert-danger" role="alert">
+                    <strong>فضلاً اكمل الحقول المطلوبة</strong>
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                     ng-init="account.paymentType='Cash'">
+                    <label for="paymentType" class="control-label">طريقة الدفع</label>
+                    <select id="paymentType"
+                            required="required"
+                            disable-validation-message=""
+                            class="form-control"
+                            ng-model="account.paymentType">
+                        <option value="Cash">نقدي</option>
+                        <option value="Premium">أقساط</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label for="price" class="control-label"> المبلغ نقدا </label>
+                    <div dir="ltr" class="input-group" id="price">
+                        <span class="input-group-addon">ريال سعودي</span>
+                        <input required="required"
+                               disable-validation-message=""
+                               type="number"
+                               min="0"
+                               class="form-control "
+                               ng-model="account.price">
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                     ng-show="account.paymentType==='Cash'">
+                    <label for="discount" class="control-label"> نسبة الخصم </label>
+                    <div dir="ltr" class="input-group" id="discount">
+                        <span class="input-group-addon">%</span>
+                        <input
+                                ng-required="account.paymentType==='Cash'"
+                                disable-validation-message=""
+                                type="number"
+                                min="0"
+                                max="100"
+                                class="form-control "
+                                ng-model="account.discount">
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                     ng-show="account.paymentType!='Cash'">
+                    <label for="profit" class="control-label"> نسبة الفائدة </label>
+                    <div dir="ltr" class="input-group" id="profit">
+                        <span class="input-group-addon">%</span>
+                        <input
+                                ng-required="account.paymentType!='Cash'"
+                                disable-validation-message=""
+                                type="number"
+                                min="0"
+                                max="100"
+                                class="form-control"
+                                ng-model="account.profit">
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                     ng-show="account.paymentType!='Cash'">
+                    <label for="premiumAmount" class="control-label"> قيمة القسط </label>
+                    <div dir="ltr" class="input-group" id="premiumAmount">
+                        <span class="input-group-addon">ريال سعودي</span>
+                        <input type="number"
+                               min="0"
+                               max="{{account.price}}"
+                               class="form-control "
+                               ng-model="account.premiumAmount"
+                               ng-required="account.paymentType!='Cash'"
+                               disable-validation-message="">
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                     ng-show="account.paymentType==='Cash'">
+                    <label for="priceAfterDiscount" class="control-label"> المبلغ بعد الخصم </label>
+                    <div dir="ltr" class="input-group"
+                         id="priceAfterDiscount">
+                        <span class="input-group-addon">ريال سعودي</span>
+                        <input type="number"
+                               readonly="readonly"
+                               class="form-control "
+                               ng-value="account.price - (account.price * account.discount / 100)">
+                    </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                     ng-show="account.paymentType!='Cash'">
+                    <label for="priceAfterProfit" class="control-label"> المبلغ بعد الفائدة </label>
+                    <div dir="ltr" class="input-group" id="priceAfterProfit">
+                        <span class="input-group-addon">ريال سعودي</span>
+                        <input readonly="readonly"
+                               class="form-control "
+                               ng-value="account.price + (account.price * account.profit / 100)">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+        <div class="row">
+            <button uib-tooltip="تعديل"
+                    tooltip-append-to-body="true"
+                    type="submit"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/edit.{{iconSetType}}" width="24" height="24">
+            </button>
+            <button uib-tooltip="خروج"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-click="cancel()"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/close.{{iconSetType}}" width="24" height="24">
+            </button>
+        </div>
+
+    </div>
+
+</form>

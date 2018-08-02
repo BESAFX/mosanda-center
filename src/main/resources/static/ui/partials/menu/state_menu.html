@@ -1,0 +1,611 @@
+<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="form-group row">
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title-box pull-right">
+                    <h3>الإدارة والتحكم</h3>
+                    <span>الشاشات الخاصة بالإدارة العامة للفروع</span>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <div class="form-group row">
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateCompany()"
+                         ng-if="contains(me.team.authorities, ['ROLE_COMPANY_UPDATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/company.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>الشركة</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateBranch()"
+                         ng-if="contains(me.team.authorities, [
+             'ROLE_BRANCH_CREATE',
+             'ROLE_BRANCH_UPDATE',
+             'ROLE_BRANCH_DELETE'
+             ])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/branch.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>الفروع</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateBankTransaction()"
+                         ng-if="contains(me.team.authorities, ['ROLE_COMPANY_UPDATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/bankTransaction.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>المعاملات المالية</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateTeam()"
+                         ng-if="contains(me.team.authorities, [
+             'ROLE_TEAM_CREATE',
+             'ROLE_TEAM_UPDATE',
+             'ROLE_TEAM_DELETE'
+             ])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/team.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>الصلاحيات</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStatePerson()"
+                         ng-if="contains(me.team.authorities, [
+             'ROLE_PERSON_CREATE',
+             'ROLE_PERSON_UPDATE',
+             'ROLE_PERSON_DELETE'
+             ])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/person.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>المستخدمين</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateReport()">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/report.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>التقارير</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateProfile()">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/profile.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>الملف الشخصي</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateAbout()">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/about.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>عن البرنامج</span>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <ul class="panel-controls pull-left" style="margin-top: 2px;">
+                    <li>
+                        <a href=""
+                           ng-click="findDailyHistory()"
+                           tooltip-append-to-body="true"
+                           uib-tooltip="تحديث">
+                            <img class="material-icons mdl-list__item-icon"
+                                 ng-src="/ui/img/{{iconSet}}/refresh.{{iconSetType}}"
+                                 width="24"
+                                 height="24">
+                        </a>
+                    </li>
+                </ul>
+                <div class="panel-title-box pull-right">
+                    <h3>العمليات الأخيرة</h3>
+                    <span>جميع الحركات على البرنامج التي تمت خلال آخر 24 ساعة</span>
+                </div>
+            </div>
+            <div class="panel-body panel-body-scroll">
+
+                <div class="form-group row">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <tbody>
+                            <tr ng-repeat="history in dailyHistories">
+                                <td>
+                                    <div class="form-group row">
+                                        <span>{{history.note}}</span>
+                                    </div>
+                                    <div class="for-group row">
+                                        <span class="label label-success pull-right">{{history.modifiedDate | date: 'hh:mm a'}}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
+                                ng-if="!dailyHistories || dailyHistories.length ==0">
+                                <td>
+                                    <p>
+                                        <span>لا نتائج</span>
+                                    </p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+
+    <div class="form-group row">
+
+        <div class="panel panel-info">
+
+            <div class="panel-heading">
+                <div class="panel-title-box pull-right">
+                    <h3>اجراءات عاجلة</h3>
+                    <span>روابط سريعة للوصول إلى العمليات لمختلف البيانات</span>
+                </div>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="form-group row">
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newBranch()"
+                         ng-if="contains(me.team.authorities, ['ROLE_BRANCH_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/add.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>فرع جديد</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newMasterCategory()"
+                         ng-if="contains(me.team.authorities, ['ROLE_MASTER_CATEGORY_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/add.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>تصنيف جديد</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newMaster()"
+                         ng-if="contains(me.team.authorities, ['ROLE_MASTER_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/add.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>تخصص جديد</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newOffer()"
+                         ng-if="contains(me.team.authorities, ['ROLE_OFFER_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/add.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>عرض جديد</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newCourse()"
+                         ng-if="contains(me.team.authorities, ['ROLE_COURSE_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/add.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>دورة جديدة</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newStudent()"
+                         ng-if="contains(me.team.authorities, ['ROLE_STUDENT_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/add.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>طالب جديد</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newAccount()"
+                         ng-if="contains(me.team.authorities, ['ROLE_ACCOUNT_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/add.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>تسجيل جديد</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newAccountPayment()"
+                         ng-if="contains(me.team.authorities, ['ROLE_ACCOUNT_PAYMENT_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/add.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>سند قبض</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newDeposit()"
+                         ng-if="contains(me.team.authorities, ['ROLE_DEPOSIT_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/deposit.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>إيداع</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newWithdraw()"
+                         ng-if="contains(me.team.authorities, ['ROLE_WITHDRAW_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/withdraw.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>سحب</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newTransfer()"
+                         ng-if="contains(me.team.authorities, ['ROLE_TRANSFER_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/send.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>تحويل</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newExpense()"
+                         ng-if="contains(me.team.authorities, ['ROLE_TRANSFER_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/cash_outgoings.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>مصاريف</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newCustomerPayment()"
+                         ng-if="contains(me.team.authorities, ['ROLE_CUSTOMER_PAYMENT_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/customerPayment.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>سند قبض</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newPerson()"
+                         ng-if="contains(me.team.authorities, ['ROLE_PERSON_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/add.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>مستخدم جديد</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 parent text-center"
+                         ng-click="newTeam()"
+                         ng-if="contains(me.team.authorities, ['ROLE_TEAM_CREATE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/add.{{iconSetType}}'); background-size: 30px 30px !important; width: 30px!important; height: 30px!important;">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>صلاحيات جديدة</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title-box pull-right">
+                    <h3>التدريب</h3>
+                    <span>الشاشات الرئيسية لبيانات الطلاب وحساباتهم الشخصية والمالية</span>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <div class="form-group row">
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateMaster()"
+                         ng-if="contains(me.team.authorities, [
+             'ROLE_MASTER_CREATE',
+             'ROLE_MASTER_UPDATE',
+             'ROLE_MASTER_DELETE'
+             ])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/master.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>التخصصات</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateOffer()"
+                         ng-if="contains(me.team.authorities, [
+             'ROLE_OFFER_CREATE',
+             'ROLE_OFFER_UPDATE',
+             'ROLE_OFFER_DELETE'
+             ])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/offer.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>العروض</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateCourse()"
+                         ng-if="contains(me.team.authorities, [
+             'ROLE_COURSE_CREATE',
+             'ROLE_COURSE_UPDATE',
+             'ROLE_COURSE_DELETE'
+             ])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/course.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>الدورات</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateStudent()"
+                         ng-if="contains(me.team.authorities, [
+                                 'ROLE_STUDENT_CREATE',
+                                 'ROLE_STUDENT_UPDATE',
+                                 'ROLE_STUDENT_DELETE'
+                                 ])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/student.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>الطلاب</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateAccount()"
+                         ng-if="contains(me.team.authorities, [
+                                 'ROLE_ACCOUNT_CREATE',
+                                 'ROLE_ACCOUNT_UPDATE',
+                                 'ROLE_ACCOUNT_DELETE'
+                                 ])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/account.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>التسجيل</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 parent text-center"
+                         ng-click="openStateContractPayment()"
+                         ng-if="contains(me.team.authorities, [
+                             'ROLE_CONTRACT_PAYMENT_CREATE',
+                             'ROLE_CONTRACT_PAYMENT_UPDATE',
+                             'ROLE_CONTRACT_PAYMENT_DELETE'
+                             ])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/{{iconSet}}/accountPayment.{{iconSetType}}')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span>السداد</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <ul class="panel-controls pull-left" style="margin-top: 2px;">
+                    <li>
+                        <a href=""
+                           ng-click="findDailyOffers()"
+                           tooltip-append-to-body="true"
+                           uib-tooltip="تحديث">
+                            <img class="material-icons mdl-list__item-icon"
+                                 ng-src="/ui/img/{{iconSet}}/refresh.{{iconSetType}}"
+                                 width="24"
+                                 height="24">
+                        </a>
+                    </li>
+                </ul>
+                <div class="panel-title-box pull-right">
+                    <h3>العروض الأخيرة</h3>
+                    <span>جميع العروض التي تم ادخالها خلال اليوم</span>
+                </div>
+            </div>
+            <div class="panel-body panel-body-scroll">
+
+                <div class="form-group row">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <tbody>
+                            <tr ng-repeat="offer in widgetOffers"
+                                ng-dblclick="ModalProvider.openOfferDetailsModel(offer)"
+                                context-menu="rowMenuOffer">
+                                <td>
+                                    <div class="form-group row">
+                                        <span class="pull-right">
+                                            <span>العميل / </span>
+                                            {{offer.customer.contact.shortName}}
+                                            <a href=""
+                                               ng-if="contains(me.team.authorities, ['ROLE_CUSTOMER_UPDATE'])"
+                                               ng-click="ModalProvider.openCustomerUpdateModel(offer.customer)">
+                                                <span class="fa fa-edit"></span>
+                                            </a>
+                                        </span>
+                                        <span class="pull-left">{{offer.customer.contact.mobile}}</span>
+                                    </div>
+                                    <div class="for-group row">
+                                        <span class="label label-danger pull-right">
+                                            <span>مبلغ العرض</span>
+                                            {{offer.totalPriceAfterDiscountAndVat | currency:' SAR ':2}}
+                                        </span>
+                                        <span class="label label-success pull-left">{{offer.writtenDate | date: 'hh:mm a'}}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
+                                ng-if="!widgetOffers || widgetOffers.length ==0">
+                                <td>
+                                    <p>
+                                        <span>لا نتائج</span>
+                                    </p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,302 @@
+<form dir="rtl" name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+      focus-group-head="loop" focus-group-tail="loop">
+
+    <div class="modal-header mdl-color--primary mdl-navigation__link-active">
+        <a class="pull-left" href="" ng-click="cancel()">
+            <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/close.{{iconSetType}}" width="24" height="24">
+        </a>
+        <h3 class="panel-title mdl-list__item pull-right mdl-color-text--white">
+            <span class="mdl-list__item-primary-content">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/student.{{iconSetType}}" width="24" height="24">
+                <strong>البحث في بيانات الطلاب</strong>
+            </span>
+        </h3>
+    </div>
+
+    <div class="modal-body modal-body-free" id="modal-body">
+
+        <div class="form-group row">
+
+            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+
+                <div class="mdl-tabs__tab-bar">
+                    <a href="#panel-1-student-filter" class="mdl-tabs__tab col-xs-6 col-sm-6 col-md-6 col-lg-6 is-active">
+                        <span>الفلاتر</span>
+                    </a>
+                    <a href="#panel-2-student-filter" class="mdl-tabs__tab col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <span>خيارات</span>
+                    </a>
+                </div>
+
+                <div class="mdl-tabs__panel is-active" id="panel-1-student-filter">
+
+                    <div class="form-group row">
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="branch" class="control-label">
+                                <span>الفرع</span>
+                            </label>
+                            <ui-select id="branch"
+                                       focus-autofocus="1"
+                                       ng-model="paramStudent.branch"
+                                       required="required"
+                                       disable-validation-message=""
+                                       theme="bootstrap">
+                                <ui-select-match placeholder="اجباري">
+                                    {{$select.selected.name}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="branch in branches | filter: $select.search | orderBy:'code' track by branch.id">
+
+                                    <div class="mdl-menu__item--full-bleed-divider"></div>
+                                    <li class="mdl-list__item mdl-list__item--two-line" style="padding: unset;cursor: pointer">
+                                        <span class="mdl-list__item-primary-content">
+                                            <span class="material-icons mdl-list__item-avatar"
+                                                  style="background-color: unset;background-image: url('/ui/img/{{iconSet}}/branch.{{iconSetType}}')"></span>
+                                            <div ng-bind-html="branch.name | highlight: $select.search"></div>
+                                            <span class="mdl-list__item-sub-title">
+                                                <span>رقم الفرع / </span>
+                                                {{branch.code}}
+                                            </span>
+                                            <span class="mdl-list__item-sub-title">
+                                                <span>الاسم / </span>
+                                                {{branch.name}}
+                                            </span>
+                                        </span>
+                                    </li>
+
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="firstName" class="control-label">الاسم الأول (يحتوى على) </label>
+                            <input id="firstName"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="اختياري"
+                                   ng-model="paramStudent.firstName">
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="secondName" class="control-label">الاسم الثاني (يحتوى على) </label>
+                            <input id="secondName"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="اختياري"
+                                   ng-model="paramStudent.secondName">
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="thirdName" class="control-label">الاسم الثالث (يحتوى على) </label>
+                            <input id="thirdName"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="اختياري"
+                                   ng-model="paramStudent.thirdName">
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="forthName" class="control-label">الاسم الرابع (يحتوى على) </label>
+                            <input id="forthName"
+                                   type="text"
+                                   class="form-control"
+                                   placeholder="اختياري"
+                                   ng-model="paramStudent.forthName">
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="dateFrom" class="control-label">تاريخ التسجيل من</label>
+                            <div dir="ltr" class="input-group" id="dateFrom" ng-init="calendar1='G'">
+                                    <span class="input-group-addon">
+                                        <a href="" ng-click="calendar1==='G'?calendar1='H':calendar1='G'">
+                                            <span ng-show="calendar1==='G'">ميلادي</span>
+                                            <span ng-show="calendar1==='H'">هجري</span>
+                                        </a>
+                                    </span>
+                                <div style="position: relative">
+                                    <input style="position: absolute" ng-show="calendar1==='H'"
+                                           type="text"
+                                           class="form-control is-calendarPicker animated-div"
+                                           ng-model="paramStudent.dateFrom"
+                                           calendarType="ummalqura"
+                                           language="ar"
+                                           dateFormat="yyyy/mm/dd"
+                                           showOnFocus="true"
+                                           pickerClass="myPicker"
+                                           kdatepicker/>
+                                    <input style="position: absolute" ng-show="calendar1==='G'"
+                                           type="text"
+                                           class="form-control is-calendarPicker animated-div"
+                                           ng-model="paramStudent.dateFrom"
+                                           calendarType="gregorian"
+                                           language="ar-EG"
+                                           dateFormat="yyyy/mm/dd"
+                                           showOnFocus="true"
+                                           pickerClass="myPicker"
+                                           kdatepicker/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="dateTo" class="control-label">تاريخ التسجيل إلى</label>
+                            <div dir="ltr" class="input-group" id="dateTo" ng-init="calendar2='G'">
+                                    <span class="input-group-addon">
+                                        <a href="" ng-click="calendar2==='G'?calendar2='H':calendar2='G'">
+                                            <span ng-show="calendar2==='G'">ميلادي</span>
+                                            <span ng-show="calendar2==='H'">هجري</span>
+                                        </a>
+                                    </span>
+                                <div style="position: relative">
+                                    <input style="position: absolute" ng-show="calendar2==='H'"
+                                           type="text"
+                                           class="form-control is-calendarPicker animated-div"
+                                           ng-model="paramStudent.dateTo"
+                                           calendarType="ummalqura"
+                                           language="ar"
+                                           dateFormat="yyyy/mm/dd"
+                                           showOnFocus="true"
+                                           pickerClass="myPicker"
+                                           kdatepicker/>
+                                    <input style="position: absolute" ng-show="calendar2==='G'"
+                                           type="text"
+                                           class="form-control is-calendarPicker animated-div"
+                                           ng-model="paramStudent.dateTo"
+                                           calendarType="gregorian"
+                                           language="ar-EG"
+                                           dateFormat="yyyy/mm/dd"
+                                           showOnFocus="true"
+                                           pickerClass="myPicker"
+                                           kdatepicker/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="identityNumber" class="control-label">رقم البطاقة / الإقامة </label>
+                            <input id="identityNumber"
+                                   type="text"
+                                   class="form-control "
+                                   placeholder="اختياري"
+                                   ng-model="paramStudent.studentIdentityNumber">
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="mobile" class="control-label">رقم الجوال (يحتوى على)</label>
+                            <input id="mobile"
+                                   type="text"
+                                   class="form-control "
+                                   placeholder="اختياري"
+                                   ng-model="paramStudent.studentMobile">
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="mdl-tabs__panel" id="panel-2-student-filter">
+
+                    <div class="form-group row">
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label for="currentPage" class="control-label">رقم الصفحة </label>
+                            <input id="currentPage"
+                                   type="number"
+                                   min="1"
+                                   class="form-control"
+                                   ng-model="pageStudent.currentPage">
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label for="page" class="control-label">عدد الصفوف بالصفحة الواحدة </label>
+                            <input id="page"
+                                   type="number"
+                                   min="1"
+                                   class="form-control"
+                                   ng-model="pageStudent.size">
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <th class="info" colspan="4">
+                                    <span>ترتيب الطلاب حسب : </span>
+                                    <a href="" ng-click="addSortBy()">اضافة...</a>
+                                </th>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="sortBy in pageStudent.sorts">
+                                    <td>
+                                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <label for="sortBy" class="control-label">بواسطة</label>
+                                            <select id="sortBy" class="form-control"
+                                                    ng-model="sortBy.name">
+                                                <option value="contact.firstName">الاسم الأول</option>
+                                                <option value="contact.secondName">الاسم الثاني</option>
+                                                <option value="contact.thirdName">الاسم الثالث</option>
+                                                <option value="contact.forthName">الاسم الرابع</option>
+                                                <option value="contact.identityNumber">رقم البطاقة</option>
+                                                <option value="contact.mobile">رقم الجوال</option>
+                                                <option value="lastPerson.id">مدخل التسجيل</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <label for="direction" class="control-label">اتجاة الترتيب</label>
+                                            <select id="direction" class="form-control"
+                                                    ng-model="sortBy.direction">
+                                                <option value="asc">تصاعدي</option>
+                                                <option value="desc">تنازلي</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click="pageStudent.sorts.splice($index, 1)">حذف</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+        <div class="row">
+            <button uib-tooltip="بحث"
+                    tooltip-append-to-body="true"
+                    type="submit"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/search.{{iconSetType}}" width="24" height="24">
+            </button>
+            <button uib-tooltip="مسح الحقول"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-click="paramStudent={};pageStudent.size=5;pageStudent.page=0;form.$setPristine();"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/delete.{{iconSetType}}" width="24" height="24">
+            </button>
+            <button uib-tooltip="خروج"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-click="cancel()"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/close.{{iconSetType}}" width="24" height="24">
+            </button>
+        </div>
+
+    </div>
+
+</form>

@@ -1,0 +1,372 @@
+<form dir="rtl" name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+      focus-group-head="loop" focus-group-tail="loop">
+
+    <div class="modal-header mdl-color--primary mdl-navigation__link-active">
+        <a class="pull-left" href="" ng-click="cancel()">
+            <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/close.{{iconSetType}}"
+                 width="24" height="24">
+        </a>
+        <h3 class="panel-title mdl-list__item pull-right mdl-color-text--white">
+            <span class="mdl-list__item-primary-content">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/account.{{iconSetType}}"
+                     width="24" height="24">
+                <strong>تسجيل جديد</strong>
+            </span>
+        </h3>
+    </div>
+
+    <div class="modal-body modal-body-free" id="modal-body">
+
+        <div class="form-group row" ng-show="form.$invalid && form.$submitted">
+            <div class="alert alert-danger" role="alert">
+                <strong>فضلاً اكمل الحقول المطلوبة</strong>
+            </div>
+        </div>
+
+        <div class="form-group row">
+
+            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+
+                <div class="mdl-tabs__tab-bar">
+
+                    <a href="#panel-1-account" class="mdl-tabs__tab col-xs-6 col-sm-6 col-md-6 col-lg-6 is-active">
+                        <span>البيانات المطلوبة</span>
+                    </a>
+
+                </div>
+
+                <div class="mdl-tabs__panel is-active" id="panel-1-account">
+
+                    <div class="form-group row">
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="course" class="control-label">الدورة</label>
+                            <ui-select id="course"
+                                       ng-model="account.course"
+                                       required="required"
+                                       disable-validation-message=""
+                                       theme="bootstrap">
+                                <ui-select-match placeholder="اجباري">
+
+                                    <li class="mdl-list__item mdl-list__item--two-line" style="padding: unset;cursor: pointer">
+                                        <span class="mdl-list__item-primary-content">
+                                            <span class="material-icons mdl-list__item-avatar"
+                                                  style="background-color: unset;background-image: url('/ui/img/{{iconSet}}/course.{{iconSetType}}')"></span>
+                                            <div ng-bind-html="'رقم الدورة / ' + $select.selected.code | highlight: $select.search"></div>
+                                            <span class="mdl-list__item-sub-title">
+                                                <span>الفرع / </span>
+                                                <span>{{$select.selected.master.branch.name}}</span>
+                                            </span>
+                                            <span class="mdl-list__item-sub-title">
+                                                <span>التخصص / </span>
+                                                <span>{{$select.selected.master.name}}</span>
+                                            </span>
+                                            <span class="mdl-list__item-sub-title">
+                                                <span>المدرب / </span>
+                                                <span>{{$select.selected.instructor}}</span>
+                                            </span>
+                                        </span>
+                                    </li>
+
+                                </ui-select-match>
+                                <ui-select-header>Header text</ui-select-header>
+                                <ui-select-choices repeat="course in courses | filter: $select.search track by course.id">
+
+                                    <div class="mdl-menu__item--full-bleed-divider"></div>
+                                    <li class="mdl-list__item mdl-list__item--two-line" style="padding: unset;cursor: pointer">
+                                        <span class="mdl-list__item-primary-content">
+                                            <span class="material-icons mdl-list__item-avatar"
+                                                  style="background-color: unset;background-image: url('/ui/img/{{iconSet}}/course.{{iconSetType}}')"></span>
+                                            <div ng-bind-html="'رقم الدورة / ' + course.code | highlight: $select.search"></div>
+                                            <span class="mdl-list__item-sub-title">
+                                                <span>الفرع / </span>
+                                                <span>{{course.master.branch.name}}</span>
+                                            </span>
+                                            <span class="mdl-list__item-sub-title">
+                                                <span>التخصص / </span>
+                                               <span>{{course.master.name}}</span>
+                                            </span>
+                                            <span class="mdl-list__item-sub-title">
+                                                <span>المدرب / </span>
+                                                <span>{{course.instructor}}</span>
+                                            </span>
+                                        </span>
+                                    </li>
+
+                                </ui-select-choices>
+                                <ui-select-footer>Footer text</ui-select-footer>
+                            </ui-select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row" ng-if="account.course">
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="student" class="control-label">
+                                <span>الطالب</span>
+                                <strong>
+                                    <a href=""
+                                       ng-if="contains(me.team.authorities, ['ROLE_STUDENT_CREATE'])"
+                                       ng-click="newStudent()">طالب جديد</a>
+                                </strong>
+                            </label>
+                            <ui-select id="student"
+                                       ng-model="account.student"
+                                       required="required"
+                                       disable-validation-message=""
+                                       theme="bootstrap">
+                                <ui-select-match placeholder="اجباري">
+
+                                    <li class="mdl-list__item mdl-list__item--two-line" style="padding: unset;cursor: pointer">
+                                            <span class="mdl-list__item-primary-content">
+                                                <span class="material-icons mdl-list__item-avatar"
+                                                      style="background-color: unset;background-image: url('/ui/img/{{iconSet}}/student.{{iconSetType}}')"></span>
+                                                <div ng-bind-html="'اسم الطالب / ' + $select.selected.contact.shortName | highlight: $select.search"></div>
+                                                <span class="mdl-list__item-sub-title">
+                                                    <span>الاسم كاملاً / </span>
+                                                    <span>{{$select.selected.contact.fullName}}</span>
+                                                </span>
+                                                <span class="mdl-list__item-sub-title">
+                                                    <span>رقم البطاقة / </span>
+                                                    <span>{{$select.selected.contact.shortName}}</span>
+                                                </span>
+                                                <span class="mdl-list__item-sub-title">
+                                                    <span>رقم الجوال / </span>
+                                                    <span>{{$select.selected.contact.mobile}}</span>
+                                                </span>
+                                            </span>
+                                    </li>
+
+                                </ui-select-match>
+                                <ui-select-choices
+                                        refresh="searchStudents($select)"
+                                        refresh-delay="300"
+                                        repeat="student in students | filter: $select.search | orderBy:'code' track by $index">
+
+                                    <div class="mdl-menu__item--full-bleed-divider"></div>
+                                    <li class="mdl-list__item mdl-list__item--two-line" style="padding: unset;cursor: pointer">
+                                            <span class="mdl-list__item-primary-content">
+                                                <span class="material-icons mdl-list__item-avatar"
+                                                      style="background-color: unset;background-image: url('/ui/img/{{iconSet}}/student.{{iconSetType}}')"></span>
+                                                <div ng-bind-html="'اسم الطالب / ' + student.contact.shortName | highlight: $select.search"></div>
+                                                <span class="mdl-list__item-sub-title">
+                                                    <span>الاسم كاملاً / </span>
+                                                    {{student.contact.fullName}}
+                                                </span>
+                                                <span class="mdl-list__item-sub-title">
+                                                    <span>رقم البطاقة / </span>
+                                                    {{student.contact.shortName}}
+                                                </span>
+                                                <span class="mdl-list__item-sub-title">
+                                                    <span>رقم الجوال / </span>
+                                                    {{student.contact.mobile}}
+                                                </span>
+                                            </span>
+                                    </li>
+
+                                    <div ng-if="$index === $select.items.length-1">
+                                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+                                                ng-disabled="buffer.lastStudent"
+                                                style="width: 100%; margin-top: 5px;"
+                                                ng-click="searchStudents($select, $event);">تحميل المزيد
+                                        </button>
+                                    </div>
+
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="registerDate" class="control-label">تاريخ التسجيل</label>
+                            <div dir="ltr" class="input-group" id="registerDate" ng-init="calendar1='G'">
+                                    <span class="input-group-addon">
+                                        <a href="" ng-click="calendar1==='G'?calendar1='H':calendar1='G'">
+                                            <span ng-show="calendar1==='G'">ميلادي</span>
+                                            <span ng-show="calendar1==='H'">هجري</span>
+                                        </a>
+                                    </span>
+                                <div style="position: relative">
+                                    <input style="position: absolute" ng-show="calendar1==='H'"
+                                           type="text"
+                                           class="form-control is-calendarPicker animated-div"
+                                           ng-model="account.registerDate"
+                                           calendarType="ummalqura"
+                                           language="ar"
+                                           dateFormat="yyyy/mm/dd"
+                                           showOnFocus="true"
+                                           pickerClass="myPicker"
+                                           required="required"
+                                           disable-validation-message=""
+                                           kdatepicker/>
+                                    <input style="position: absolute" ng-show="calendar1==='G'"
+                                           type="text"
+                                           class="form-control is-calendarPicker animated-div"
+                                           ng-model="account.registerDate"
+                                           calendarType="gregorian"
+                                           language="ar-EG"
+                                           dateFormat="yyyy/mm/dd"
+                                           showOnFocus="true"
+                                           pickerClass="myPicker"
+                                           required="required"
+                                           disable-validation-message=""
+                                           kdatepicker/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="note" class="control-label">ملاحظات </label>
+                            <textarea id="note"
+                                      type="text"
+                                      msd-elastic="\n"
+                                      class="form-control"
+                                      placeholder="اذكر باختصار ملاحظات التسجيل"
+                                      ng-model="account.note">
+                            </textarea>
+                        </div>
+
+                    </div>
+
+                    <hr/>
+
+                    <div class="form-group row" ng-if="account.course">
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                             ng-init="account.paymentType='Cash'">
+                            <label for="paymentType" class="control-label">طريقة الدفع</label>
+                            <select id="paymentType"
+                                    required="required"
+                                    disable-validation-message=""
+                                    class="form-control"
+                                    ng-model="account.paymentType">
+                                <option value="Cash">نقدي</option>
+                                <option value="Premium">أقساط</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="price" class="control-label"> المبلغ نقدا </label>
+                            <div dir="ltr" class="input-group" id="price">
+                                <span class="input-group-addon">ريال سعودي</span>
+                                <input required="required"
+                                       disable-validation-message=""
+                                       type="number"
+                                       min="0"
+                                       class="form-control "
+                                       ng-model="account.price">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                             ng-show="account.paymentType==='Cash'">
+                            <label for="discount" class="control-label"> نسبة الخصم </label>
+                            <div dir="ltr" class="input-group" id="discount">
+                                <span class="input-group-addon">%</span>
+                                <input
+                                        ng-required="account.paymentType==='Cash'"
+                                        disable-validation-message=""
+                                        type="number"
+                                        min="0"
+                                        max="100"
+                                        class="form-control "
+                                        ng-model="account.discount">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                             ng-show="account.paymentType!='Cash'">
+                            <label for="profit" class="control-label"> نسبة الفائدة </label>
+                            <div dir="ltr" class="input-group" id="profit">
+                                <span class="input-group-addon">%</span>
+                                <input
+                                        ng-required="account.paymentType!='Cash'"
+                                        disable-validation-message=""
+                                        type="number"
+                                        min="0"
+                                        max="100"
+                                        class="form-control"
+                                        ng-model="account.profit">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                             ng-show="account.paymentType!='Cash'">
+                            <label for="premiumAmount" class="control-label"> قيمة القسط </label>
+                            <div dir="ltr" class="input-group" id="premiumAmount">
+                                <span class="input-group-addon">ريال سعودي</span>
+                                <input type="number"
+                                       min="0"
+                                       max="{{account.price}}"
+                                       class="form-control "
+                                       ng-model="account.premiumAmount"
+                                       ng-required="account.paymentType!='Cash'"
+                                       disable-validation-message="">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                             ng-show="account.paymentType==='Cash'">
+                            <label for="priceAfterDiscount" class="control-label"> المبلغ بعد الخصم </label>
+                            <div dir="ltr" class="input-group"
+                                 id="priceAfterDiscount">
+                                <span class="input-group-addon">ريال سعودي</span>
+                                <input type="number"
+                                       readonly="readonly"
+                                       class="form-control "
+                                       ng-value="account.price - (account.price * account.discount / 100)">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                             ng-show="account.paymentType!='Cash'">
+                            <label for="priceAfterProfit" class="control-label"> المبلغ بعد الفائدة </label>
+                            <div dir="ltr" class="input-group" id="priceAfterProfit">
+                                <span class="input-group-addon">ريال سعودي</span>
+                                <input readonly="readonly"
+                                       class="form-control "
+                                       ng-value="account.price + (account.price * account.profit / 100)">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer" ng-if="account.course">
+
+        <div class="row">
+            <button uib-tooltip="حفظ"
+                    tooltip-append-to-body="true"
+                    type="submit"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/add.{{iconSetType}}"
+                     width="24" height="24">
+            </button>
+            <button uib-tooltip="مسح الحقول"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-click="clear();form.$setPristine()"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/delete.{{iconSetType}}"
+                     width="24" height="24">
+            </button>
+            <button uib-tooltip="خروج"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-click="cancel()"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/close.{{iconSetType}}"
+                     width="24" height="24">
+            </button>
+        </div>
+
+    </div>
+
+</form>
