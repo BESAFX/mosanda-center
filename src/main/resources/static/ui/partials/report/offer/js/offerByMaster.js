@@ -42,10 +42,6 @@ app.controller('offerByMasterCtrl', ['MasterService', '$scope', '$rootScope', '$
             param.push($scope.buffer.exportType);
             param.push('&');
             //
-            param.push('registerOption=');
-            param.push($scope.buffer.registerOption);
-            param.push('&');
-            //
             param.push('title=');
             param.push($scope.buffer.title);
             param.push('&');

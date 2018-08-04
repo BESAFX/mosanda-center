@@ -188,12 +188,10 @@ gulp.task('scripts', function () {
         './partials/bankTransaction/transferCreate.js',
         './partials/bankTransaction/expenseCreate.js',
 
-        './partials/report/report.js',
         './partials/report/offer/js/offerByBranch.js',
         './partials/report/offer/js/offerByMaster.js',
-        './partials/report/offer/js/offerByMasterCategory.js',
-        './partials/report/offer/js/offerById.js',
         './partials/report/offer/js/offerByPerson.js',
+
         './partials/report/call/js/callByPerson.js',
 
         './partials/report/account/js/accountByBranch.js',

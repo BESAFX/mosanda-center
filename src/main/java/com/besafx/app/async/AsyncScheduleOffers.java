@@ -1,7 +1,10 @@
 package com.besafx.app.async;
 
 import com.besafx.app.entity.Branch;
+import com.besafx.app.init.Initializer;
+import com.besafx.app.util.CompanyOptions;
 import com.besafx.app.util.DateConverter;
+import com.besafx.app.util.JSONConverter;
 import net.sf.jasperreports.engine.*;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -19,7 +22,7 @@ import java.util.concurrent.Future;
 @Service
 public class AsyncScheduleOffers {
 
-    private final Logger log = LoggerFactory.getLogger(AsyncScheduleOffers.class);
+    private final Logger LOG = LoggerFactory.getLogger(AsyncScheduleOffers.class);
 
     private DateTime startDate, endDate;
 
@@ -63,8 +66,13 @@ public class AsyncScheduleOffers {
         title.append(DateConverter.getHijriStringFromDateLTR(endDate.toDate()));
 
         Map<String, Object> map = new HashMap<>();
-        map.put("title", title.toString());
-        map.put("offers", transactionalService.getOffersByDateAndBranch(branch, startDate.toDate(), endDate.toDate()));
+        CompanyOptions options = JSONConverter.toObject(Initializer.company.getOptions(), CompanyOptions.class);
+        map.put("REPORT_TITLE", options.getReportTitle());
+        map.put("REPORT_SUB_TITLE", options.getReportSubTitle());
+        map.put("REPORT_FOOTER", options.getReportFooter());
+        map.put("LOGO", options.getLogo());
+        map.put("TITLE", title.toString());
+        map.put("OFFERS", transactionalService.getOffersByDateAndBranch(branch, startDate.toDate(), endDate.toDate()));
 
         ClassPathResource jrxmlFile = new ClassPathResource("/report/offer/Report.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());

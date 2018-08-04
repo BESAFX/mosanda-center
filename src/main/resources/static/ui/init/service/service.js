@@ -882,17 +882,6 @@ app.service('ReportModelProvider', ['$uibModal', function ($uibModal) {
             keyboard: false
         });
     };
-    this.openReportOfferByMasterCategoryModel = function () {
-        return $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: "/ui/partials/report/offer/offerByMasterCategory.html",
-            controller: "offerByMasterCategoryCtrl",
-            backdrop: 'static',
-            keyboard: false
-        });
-    };
     this.openReportOfferByPersonModel = function () {
         return $uibModal.open({
             animation: true,
@@ -900,17 +889,6 @@ app.service('ReportModelProvider', ['$uibModal', function ($uibModal) {
             ariaDescribedBy: 'modal-body',
             templateUrl: "/ui/partials/report/offer/offerByPerson.html",
             controller: "offerByPersonCtrl",
-            backdrop: 'static',
-            keyboard: false
-        });
-    };
-    this.openReportOfferByIdModel = function () {
-        return $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: "/ui/partials/report/offer/offerById.html",
-            controller: "offerByIdCtrl",
             backdrop: 'static',
             keyboard: false
         });

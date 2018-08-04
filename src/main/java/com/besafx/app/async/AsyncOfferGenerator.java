@@ -30,7 +30,7 @@ public class AsyncOfferGenerator {
 
     @Async("threadMultiplePool")
     @Transactional
-    public Future<JasperPrint> generate(Long offerId) throws Exception {
+    public Future<JasperPrint> generate(Long offerId) {
         Map<String, Object> map = new HashMap<>();
         CompanyOptions options = JSONConverter.toObject(Initializer.company.getOptions(), CompanyOptions.class);
         map.put("REPORT_TITLE", options.getReportTitle());

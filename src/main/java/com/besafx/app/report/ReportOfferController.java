@@ -4,7 +4,10 @@ import com.besafx.app.async.AsyncOfferGenerator;
 import com.besafx.app.component.ReportExporter;
 import com.besafx.app.entity.Offer;
 import com.besafx.app.enums.ExportType;
+import com.besafx.app.init.Initializer;
 import com.besafx.app.service.OfferService;
+import com.besafx.app.util.CompanyOptions;
+import com.besafx.app.util.JSONConverter;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -49,31 +52,23 @@ public class ReportOfferController {
             @RequestParam(value = "branchIds") List<Long> branchIds,
             @RequestParam(value = "title") String title,
             @RequestParam(value = "exportType") ExportType exportType,
-            @RequestParam(value = "registerOption") Integer registerOption,
             @RequestParam(value = "startDate", required = false) Long startDate,
             @RequestParam(value = "endDate", required = false) Long endDate,
             Sort sort,
             HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<>();
-        map.put("title", title);
+        CompanyOptions options = JSONConverter.toObject(Initializer.company.getOptions(), CompanyOptions.class);
+        map.put("REPORT_TITLE", options.getReportTitle());
+        map.put("REPORT_SUB_TITLE", options.getReportSubTitle());
+        map.put("REPORT_FOOTER", options.getReportFooter());
+        map.put("LOGO", options.getLogo());
+        map.put("TITLE", title);
         //Start Search
         List<Specification> predicates = new ArrayList<>();
         Optional.ofNullable(branchIds).ifPresent(value -> predicates.add((root, cq, cb) -> root.get("master").get("branch").get("id").in(value)));
-        Optional.ofNullable(startDate).ifPresent(value -> predicates.add((root, cq, cb) -> cb.greaterThanOrEqualTo(root.get("lastUpdate"), new DateTime(value).withTimeAtStartOfDay().toDate())));
-        Optional.ofNullable(endDate).ifPresent(value -> predicates.add((root, cq, cb) -> cb.lessThanOrEqualTo(root.get("lastUpdate"), new DateTime(value).plusDays(1).withTimeAtStartOfDay().toDate())));
-        Optional.ofNullable(registerOption).ifPresent(value -> {
-            switch (value) {
-                case 2:
-                    predicates.add((root, cq, cb) -> cb.isTrue(root.get("registered")));
-                    break;
-                case 3:
-                    predicates.add((root, cq, cb) -> cb.isFalse(root.get("registered")));
-                    break;
-                default:
-                    break;
-            }
-        });
-        map.put("offers", getList(predicates, sort));
+        Optional.ofNullable(startDate).ifPresent(value -> predicates.add((root, cq, cb) -> cb.greaterThanOrEqualTo(root.get("writtenDate"), new DateTime(value).withTimeAtStartOfDay().toDate())));
+        Optional.ofNullable(endDate).ifPresent(value -> predicates.add((root, cq, cb) -> cb.lessThanOrEqualTo(root.get("writtenDate"), new DateTime(value).plusDays(1).withTimeAtStartOfDay().toDate())));
+        map.put("OFFERS", getList(predicates, sort));
         //End Search
         ClassPathResource jrxmlFile = new ClassPathResource("/report/offer/Report.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
@@ -87,32 +82,24 @@ public class ReportOfferController {
             @RequestParam(value = "masterIds") List<Long> masterIds,
             @RequestParam(value = "title") String title,
             @RequestParam(value = "exportType") ExportType exportType,
-            @RequestParam(value = "registerOption") Integer registerOption,
             @RequestParam(value = "startDate", required = false) Long startDate,
             @RequestParam(value = "endDate", required = false) Long endDate,
             Sort sort,
             HttpServletResponse response)
             throws Exception {
         Map<String, Object> map = new HashMap<>();
-        map.put("title", title);
+        CompanyOptions options = JSONConverter.toObject(Initializer.company.getOptions(), CompanyOptions.class);
+        map.put("REPORT_TITLE", options.getReportTitle());
+        map.put("REPORT_SUB_TITLE", options.getReportSubTitle());
+        map.put("REPORT_FOOTER", options.getReportFooter());
+        map.put("LOGO", options.getLogo());
+        map.put("TITLE", title);
         //Start Search
         List<Specification> predicates = new ArrayList<>();
         Optional.ofNullable(masterIds).ifPresent(value -> predicates.add((root, cq, cb) -> root.get("master").get("id").in(value)));
-        Optional.ofNullable(startDate).ifPresent(value -> predicates.add((root, cq, cb) -> cb.greaterThanOrEqualTo(root.get("lastUpdate"), new DateTime(value).withTimeAtStartOfDay().toDate())));
-        Optional.ofNullable(endDate).ifPresent(value -> predicates.add((root, cq, cb) -> cb.lessThanOrEqualTo(root.get("lastUpdate"), new DateTime(value).plusDays(1).withTimeAtStartOfDay().toDate())));
-        Optional.ofNullable(registerOption).ifPresent(value -> {
-            switch (value) {
-                case 2:
-                    predicates.add((root, cq, cb) -> cb.isTrue(root.get("registered")));
-                    break;
-                case 3:
-                    predicates.add((root, cq, cb) -> cb.isFalse(root.get("registered")));
-                    break;
-                default:
-                    break;
-            }
-        });
-        map.put("offers", getList(predicates, sort));
+        Optional.ofNullable(startDate).ifPresent(value -> predicates.add((root, cq, cb) -> cb.greaterThanOrEqualTo(root.get("writtenDate"), new DateTime(value).withTimeAtStartOfDay().toDate())));
+        Optional.ofNullable(endDate).ifPresent(value -> predicates.add((root, cq, cb) -> cb.lessThanOrEqualTo(root.get("writtenDate"), new DateTime(value).plusDays(1).withTimeAtStartOfDay().toDate())));
+        map.put("OFFERS", getList(predicates, sort));
         //End Search
         ClassPathResource jrxmlFile = new ClassPathResource("/report/offer/Report.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
@@ -126,32 +113,24 @@ public class ReportOfferController {
             @RequestParam(value = "personIds") List<Long> personIds,
             @RequestParam(value = "title") String title,
             @RequestParam(value = "exportType") ExportType exportType,
-            @RequestParam(value = "registerOption") Integer registerOption,
             @RequestParam(value = "startDate", required = false) Long startDate,
             @RequestParam(value = "endDate", required = false) Long endDate,
             Sort sort,
             HttpServletResponse response)
             throws Exception {
         Map<String, Object> map = new HashMap<>();
-        map.put("title", title);
+        CompanyOptions options = JSONConverter.toObject(Initializer.company.getOptions(), CompanyOptions.class);
+        map.put("REPORT_TITLE", options.getReportTitle());
+        map.put("REPORT_SUB_TITLE", options.getReportSubTitle());
+        map.put("REPORT_FOOTER", options.getReportFooter());
+        map.put("LOGO", options.getLogo());
+        map.put("TITLE", title);
         //Start Search
         List<Specification> predicates = new ArrayList<>();
         Optional.ofNullable(personIds).ifPresent(value -> predicates.add((root, cq, cb) -> root.get("lastPerson").get("id").in(value)));
-        Optional.ofNullable(startDate).ifPresent(value -> predicates.add((root, cq, cb) -> cb.greaterThanOrEqualTo(root.get("lastUpdate"), new DateTime(value).withTimeAtStartOfDay().toDate())));
-        Optional.ofNullable(endDate).ifPresent(value -> predicates.add((root, cq, cb) -> cb.lessThanOrEqualTo(root.get("lastUpdate"), new DateTime(value).plusDays(1).withTimeAtStartOfDay().toDate())));
-        Optional.ofNullable(registerOption).ifPresent(value -> {
-            switch (value) {
-                case 2:
-                    predicates.add((root, cq, cb) -> cb.isTrue(root.get("registered")));
-                    break;
-                case 3:
-                    predicates.add((root, cq, cb) -> cb.isFalse(root.get("registered")));
-                    break;
-                default:
-                    break;
-            }
-        });
-        map.put("offers", getList(predicates, sort));
+        Optional.ofNullable(startDate).ifPresent(value -> predicates.add((root, cq, cb) -> cb.greaterThanOrEqualTo(root.get("writtenDate"), new DateTime(value).withTimeAtStartOfDay().toDate())));
+        Optional.ofNullable(endDate).ifPresent(value -> predicates.add((root, cq, cb) -> cb.lessThanOrEqualTo(root.get("writtenDate"), new DateTime(value).plusDays(1).withTimeAtStartOfDay().toDate())));
+        map.put("OFFERS", getList(predicates, sort));
         //End Search
         ClassPathResource jrxmlFile = new ClassPathResource("/report/offer/Report.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
