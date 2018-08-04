@@ -99,7 +99,7 @@ public class TransactionalService {
 
     @Transactional
     public List<Offer> getOffersByDateAndBranch(Branch branch, Date dateFrom, Date dateTo) {
-        return offerService.findByMasterBranchAndDateBetween(branch, dateFrom, dateTo);
+        return offerService.findByMasterBranchAndWrittenDateBetween(branch, dateFrom, dateTo);
     }
 
     @Transactional

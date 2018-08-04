@@ -202,10 +202,10 @@
                                 </a>
                             </td>
                             <td>
-                                <span ng-class="{'no-print': dateType==='G'}" ng-show="dateType==='H'">{{offer.date | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
-                                <span ng-class="{'no-print': dateType==='H'}" ng-show="dateType==='G'">{{offer.date | date: 'yyyy-MM-dd'}}</span>
+                                <span ng-class="{'no-print': dateType==='G'}" ng-show="dateType==='H'">{{offer.writtenDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                <span ng-class="{'no-print': dateType==='H'}" ng-show="dateType==='G'">{{offer.writtenDate | date: 'yyyy-MM-dd'}}</span>
                                 <br/>
-                                <span class="label label-success">{{offer.date | date: 'hh:mm a'}}</span>
+                                <span class="label label-success">{{offer.writtenDate | date: 'hh:mm a'}}</span>
                             </td>
                             <td>
                                 <span>{{offer.customerName}}</span>

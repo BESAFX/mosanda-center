@@ -26,7 +26,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,7 +69,6 @@ public class OfferRest {
     public String create(@RequestBody Offer offer) {
         Person caller = ((PersonAwareUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getPerson();
         offer.setCode(transactionalService.getNextOfferCode(offer.getMaster().getBranch()));
-        offer.setDate(new Date());
         offer.setPerson(caller);
         offer = offerService.save(offer);
 

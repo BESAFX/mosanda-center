@@ -43,8 +43,6 @@ public class Offer implements Serializable {
 
     private Integer code;
 
-    private String note;
-
     private String customerName;
 
     private String customerIdentityNumber;
@@ -75,7 +73,12 @@ public class Offer implements Serializable {
     private Master master;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private Date writtenDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endDate;
+
+    private String note;
 
     @ManyToOne
     @JoinColumn(name = "person")

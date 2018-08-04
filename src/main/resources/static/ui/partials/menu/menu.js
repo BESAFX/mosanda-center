@@ -632,6 +632,44 @@ app.controller("menuCtrl", [
                 }
             })
         };
+        $scope.rowMenuMasterCategory = [
+            {
+                html: '<div class="drop-menu">' +
+                '<img src="/ui/img/' + $rootScope.iconSet + '/add.' + $rootScope.iconSetType + '" width="24" height="24">' +
+                '<span>جديد...</span>' +
+                '</div>',
+                enabled: function () {
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_MASTER_CATEGORY_CREATE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    $scope.newMasterCategory();
+                }
+            },
+            {
+                html: '<div class="drop-menu">' +
+                '<img src="/ui/img/' + $rootScope.iconSet + '/edit.' + $rootScope.iconSetType + '" width="24" height="24">' +
+                '<span>تعديل...</span>' +
+                '</div>',
+                enabled: function () {
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_MASTER_CATEGORY_UPDATE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    ModalProvider.openMasterCategoryUpdateModel($itemScope.masterCategory);
+                }
+            },
+            {
+                html: '<div class="drop-menu">' +
+                '<img src="/ui/img/' + $rootScope.iconSet + '/delete.' + $rootScope.iconSetType + '" width="24" height="24">' +
+                '<span>حذف</span>' +
+                '</div>',
+                enabled: function () {
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_MASTER_CATEGORY_DELETE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    $scope.deleteMasterCategory($itemScope.masterCategory);
+                }
+            }
+        ];
 
         /**************************************************************************************************************
          *                                                                                                            *
@@ -946,7 +984,7 @@ app.controller("menuCtrl", [
             });
         };
         $scope.printOffer = function (offer) {
-            window.open('/report/OfferById/' + offer.id + '?exportType=PDF');
+            window.open('/report/offer/' + offer.id);
         };
         $scope.deleteOffer = function (offer) {
             ModalProvider.openConfirmModel("حذف العروض", "delete", "هل تود حذف العرض فعلاً؟").result.then(function (value) {

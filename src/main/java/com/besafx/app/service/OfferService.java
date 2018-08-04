@@ -25,8 +25,7 @@ public interface OfferService extends PagingAndSortingRepository<Offer, Long>, J
 
     List<Offer> findByMasterBranch(Branch branch);
 
-    List<Offer> findByMasterBranchAndDateBetween(Branch branch, @Temporal(TemporalType.TIMESTAMP) Date startDate, @Temporal(TemporalType.TIMESTAMP)
-            Date endDate);
+    List<Offer> findByMasterBranchAndWrittenDateBetween(Branch branch, @Temporal(TemporalType.TIMESTAMP) Date startDate, @Temporal(TemporalType.TIMESTAMP) Date endDate);
 
     List<Offer> findByMaster(Master master);
 }

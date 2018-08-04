@@ -40,9 +40,10 @@
 
                         <div class="form-group row">
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-init="offer.date=now">
-                                <label for="date" class="control-label">تاريخ العرض</label>
-                                <div dir="ltr" class="input-group" id="date" ng-init="calendar1='G'">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                 ng-init="offer.writtenDate=now">
+                                <label for="writtenDate" class="control-label">تاريخ العرض</label>
+                                <div dir="ltr" class="input-group" id="writtenDate" ng-init="calendar1='G'">
                                     <span class="input-group-addon">
                                         <a href="" ng-click="calendar1==='G'?calendar1='H':calendar1='G'">
                                             <span ng-show="calendar1==='G'">ميلادي</span>
@@ -53,7 +54,7 @@
                                         <input style="position: absolute" ng-show="calendar1==='H'"
                                                type="text"
                                                class="form-control is-calendarPicker animated-div"
-                                               ng-model="offer.date"
+                                               ng-model="offer.writtenDate"
                                                calendarType="ummalqura"
                                                language="ar"
                                                dateFormat="yyyy/mm/dd"
@@ -65,7 +66,46 @@
                                         <input style="position: absolute" ng-show="calendar1==='G'"
                                                type="text"
                                                class="form-control is-calendarPicker animated-div"
-                                               ng-model="offer.date"
+                                               ng-model="offer.writtenDate"
+                                               calendarType="gregorian"
+                                               language="ar-EG"
+                                               dateFormat="yyyy/mm/dd"
+                                               showOnFocus="true"
+                                               pickerClass="myPicker"
+                                               required="required"
+                                               disable-validation-message=""
+                                               kdatepicker/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                 ng-init="offer.endDate=now">
+                                <label for="endDate" class="control-label">تاريخ الإنتهاء</label>
+                                <div dir="ltr" class="input-group" id="endDate" ng-init="calendar1='G'">
+                                    <span class="input-group-addon">
+                                        <a href="" ng-click="calendar1==='G'?calendar1='H':calendar1='G'">
+                                            <span ng-show="calendar1==='G'">ميلادي</span>
+                                            <span ng-show="calendar1==='H'">هجري</span>
+                                        </a>
+                                    </span>
+                                    <div style="position: relative">
+                                        <input style="position: absolute" ng-show="calendar1==='H'"
+                                               type="text"
+                                               class="form-control is-calendarPicker animated-div"
+                                               ng-model="offer.endDate"
+                                               calendarType="ummalqura"
+                                               language="ar"
+                                               dateFormat="yyyy/mm/dd"
+                                               showOnFocus="true"
+                                               pickerClass="myPicker"
+                                               required="required"
+                                               disable-validation-message=""
+                                               kdatepicker/>
+                                        <input style="position: absolute" ng-show="calendar1==='G'"
+                                               type="text"
+                                               class="form-control is-calendarPicker animated-div"
+                                               ng-model="offer.endDate"
                                                calendarType="gregorian"
                                                language="ar-EG"
                                                dateFormat="yyyy/mm/dd"

@@ -3,7 +3,6 @@ package com.besafx.app.rest;
 import com.besafx.app.async.TransactionalService;
 import com.besafx.app.auditing.EntityHistoryListener;
 import com.besafx.app.auditing.PersonAwareUserDetails;
-import com.besafx.app.entity.Contact;
 import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Student;
 import com.besafx.app.search.StudentSearch;
@@ -15,7 +14,6 @@ import com.besafx.app.ws.NotificationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.bohnman.squiggly.Squiggly;
 import com.github.bohnman.squiggly.util.SquigglyUtils;
-import com.google.common.collect.Lists;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +71,7 @@ public class StudentRest {
 
         StringBuilder builder = new StringBuilder();
         builder.append("إنشاء كارت الطالب ");
-        builder.append(" ( " + student.getContact().getFirstName().concat(student.getContact().getForthName()) + " ) ");
+        builder.append(" ( " + student.getContact().getFirstName().concat(" ").concat(student.getContact().getForthName()) + " ) ");
         builder.append("،رقم الجوال ");
         builder.append(" ( " + student.getContact().getMobile() + " ) ");
         builder.append("، بواسطة ");

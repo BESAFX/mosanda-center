@@ -4,6 +4,7 @@ import org.joda.time.*;
 import org.joda.time.chrono.IslamicChronology;
 import org.joda.time.format.DateTimeFormat;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -26,11 +27,15 @@ public class DateConverter {
     }
 
     public static String getDateInFormat(long dateInSeconds) {
-        return new SimpleDateFormat("yyyy-MM-dd").format(new Date(dateInSeconds));
+        return new SimpleDateFormat("yyyy/MM/dd").format(new Date(dateInSeconds));
     }
 
     public static String getDateInFormat(Date date) {
         return new SimpleDateFormat("yyyy/MM/dd").format(date);
+    }
+
+    public static String getDateInFormatLTR(Date date) {
+        return new SimpleDateFormat("dd/MM/yyyy").format(date);
     }
 
     public static String getTimeFromDate(Date date) {
@@ -94,7 +99,9 @@ public class DateConverter {
         Calendar cl = Calendar.getInstance();
         cl.setTime(date);
         HijrahDate islamicDate = HijrahChronology.INSTANCE.date(LocalDate.of(cl.get(Calendar.YEAR), cl.get(Calendar.MONTH) + 1, cl.get(Calendar.DATE)));
-        return islamicDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " " + new SimpleDateFormat("hh:mm a").format(date).replaceAll("PM", "م").replaceAll("AM", "ص");
+        return islamicDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd")) + " " + new SimpleDateFormat("hh:mm a").format(date).replaceAll("PM",
+                                                                                                                                             "م")
+                                                                                                                    .replaceAll("AM", "ص");
     }
 
     public static String getHijriStringFromDateLTRWithTime(Date date) {
@@ -138,6 +145,17 @@ public class DateConverter {
     public static Date parseHijriDateStringWithFormat(String date, String format) throws Exception {
         org.joda.time.format.DateTimeFormatter formatter = DateTimeFormat.forPattern(format).withChronology(IslamicChronology.getInstance());
         return formatter.parseDateTime(date).toDate();
+    }
+
+    public static Date parseJsonStringDate(String jsonDateString){
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MM-yyyy");
+            return inputFormat.parse(jsonDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static Date getCurrentWeekStart() {

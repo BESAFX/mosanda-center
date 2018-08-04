@@ -104,7 +104,7 @@ public class PersonRest {
         Person caller = ((PersonAwareUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getPerson();
         StringBuilder builder = new StringBuilder();
         builder.append("إنشاء المستخدم ");
-        builder.append(" ( " + person.getContact().getFirstName().concat(person.getContact().getForthName()) + " ) ");
+        builder.append(" ( " + person.getContact().getFirstName().concat(" ").concat(person.getContact().getForthName()) + " ) ");
         builder.append("، بواسطة ");
         builder.append(caller.getContact().getShortName());
         notificationService.notifyAll(Notification
