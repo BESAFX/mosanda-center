@@ -1,0 +1,149 @@
+<div dir="rtl">
+
+    <div class="modal-header mdl-color--primary mdl-navigation__link-active">
+        <a class="pull-left" href="" ng-click="cancel()">
+            <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/close.{{iconSetType}}" width="24" height="24">
+        </a>
+        <h3 class="panel-title mdl-list__item pull-right mdl-color-text--white">
+            <span class="mdl-list__item-primary-content">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/student.{{iconSetType}}" width="24" height="24">
+                <span>معلومات الطالب / </span>&nbsp;
+                <span class="label label-info">{{student.contact.shortName}}</span>
+            </span>
+        </h3>
+    </div>
+
+    <div class="modal-body modal-body-free" id="modal-body">
+
+        <div class="form-group row">
+            <button uib-tooltip="تحديث"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-click="refreshStudent()"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/refresh.{{iconSetType}}" width="24" height="24">
+            </button>
+            <button uib-tooltip="تعديل بيانات الطالب"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-if="contains(me.team.authorities, ['ROLE_STUDENT_UPDATE'])"
+                    ng-click="updateStudent()"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-2 col-md-2 col-lg-2">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/edit.{{iconSetType}}" width="24" height="24">
+            </button>
+        </div>
+
+        <div class="form-group row">
+
+            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+
+                <div class="mdl-tabs__tab-bar">
+                    <a href="#panel-1-student" class="mdl-tabs__tab col-xs-3 col-sm-3 col-md-3 col-lg-3 is-active">
+                        <span>بيانات الطالب</span>
+                    </a>
+                    <a href="#panel-2-student" class="mdl-tabs__tab col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <span>السجلات التدريبية</span>
+                    </a>
+                </div>
+
+                <div class="mdl-tabs__panel is-active" id="panel-1-student">
+
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td>تاريخ آخر تعديل</td>
+                                    <td>
+                                        <span ng-show="dateType==='H'">{{student.lastUpdate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                        <span ng-show="dateType==='G'">{{student.lastUpdate | date: 'yyyy-MM-dd'}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>الاسم</td>
+                                    <td>
+                                        {{student.contact.fullName}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>رقم البطاقة</td>
+                                    <td>{{student.contact.identityNumber}}</td>
+                                </tr>
+                                <tr>
+                                    <td>مكان الاصدار</td>
+                                    <td>{{student.contact.identityLocation}}</td>
+                                </tr>
+                                <tr>
+                                    <td>تاريخ الاصدار</td>
+                                    <td>
+                                        <span ng-show="dateType==='H'">{{student.contact.identityStartDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                        <span ng-show="dateType==='G'">{{student.contact.identityStartDate | date: 'yyyy-MM-dd'}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>المؤهل</td>
+                                    <td>{{student.contact.qualification}}</td>
+                                </tr>
+                                <tr>
+                                    <td>مكان الميلاد</td>
+                                    <td>{{student.contact.birthLocation}}</td>
+                                </tr>
+                                <tr>
+                                    <td>تاريخ الميلاد</td>
+                                    <td>
+                                        <span ng-show="dateType==='H'">{{student.contact.birthDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                        <span ng-show="dateType==='G'">{{student.contact.birthDate | date: 'yyyy-MM-dd'}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>الجنسية</td>
+                                    <td>{{student.contact.nationality}}</td>
+                                </tr>
+                                <tr>
+                                    <td>رقم الجوال</td>
+                                    <td>{{student.contact.mobile}}</td>
+                                </tr>
+                                <tr>
+                                    <td>العنوان</td>
+                                    <td>{{student.contact.address}}</td>
+                                </tr>
+                                <tr>
+                                    <td>بواسطة</td>
+                                    <td>{{student.lastPerson.contact.shortName}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mdl-tabs__panel" id="panel-2-student">
+
+                    <div class="form-group row">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+        <div class="row">
+            <button uib-tooltip="خروج"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-click="cancel()"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-left">
+                <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/close.{{iconSetType}}" width="24" height="24">
+            </button>
+        </div>
+
+    </div>
+
+</div>

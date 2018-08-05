@@ -5,7 +5,6 @@ import com.besafx.app.auditing.EntityHistoryListener;
 import com.besafx.app.auditing.PersonAwareUserDetails;
 import com.besafx.app.config.CustomException;
 import com.besafx.app.entity.Course;
-import com.besafx.app.entity.Master;
 import com.besafx.app.entity.Person;
 import com.besafx.app.search.CourseSearch;
 import com.besafx.app.service.*;
@@ -19,6 +18,7 @@ import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,6 +53,8 @@ public class CourseRest {
             "code," +
             "instructor," +
             "companyName," +
+            "courseCondition," +
+            "courseConditionInArabic," +
             "master[id,code,name,branch[id,code,name]]";
 
     @Autowired
@@ -277,9 +279,10 @@ public class CourseRest {
             @RequestParam(value = "codeFrom", required = false) final Long codeFrom,
             @RequestParam(value = "codeTo", required = false) final Long codeTo,
             @RequestParam(value = "branchId", required = false) final Long branchId,
-            @RequestParam(value = "masterId", required = false) final Long masterId) {
-        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE),
-                                       courseSearch.search(instructor, codeFrom, codeTo, branchId, masterId));
+            @RequestParam(value = "masterId", required = false) final Long masterId,
+            Pageable pageable) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), "**,".concat("content[").concat(FILTER_TABLE).concat("]")),
+                                       courseSearch.filter(instructor, codeFrom, codeTo, branchId, masterId, pageable));
     }
 
 }

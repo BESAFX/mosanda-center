@@ -175,7 +175,19 @@
                             </th>
 
                             <th>
-                                <span>رقم الجوال</span>
+                                <span>مجموع التسجيلات</span>
+                            </th>
+
+                            <th>
+                                <span>اجمالي الأسعار</span>
+                            </th>
+
+                            <th>
+                                <span>المدفوع</span>
+                            </th>
+
+                            <th>
+                                <span>الباقي</span>
                             </th>
 
                             <th>
@@ -198,9 +210,16 @@
                                 </label>
                             </td>
                             <td>{{$index+1}}</td>
-                            <td>{{student.contact.fullName}}</td>
+                            <td>
+                                <span>{{student.contact.fullName}}</span>
+                                <br/>
+                                <span class="label label-success">{{student.contact.mobile}}</span>
+                            </td>
                             <td>{{student.contact.identityNumber}}</td>
-                            <td>{{student.contact.mobile}}</td>
+                            <td>{{student.accounts.length}}</td>
+                            <td>{{student.totalNet | currency:' ':2}}</td>
+                            <td>{{student.totalPaid | currency:' ':2}}</td>
+                            <td>{{student.totalRemain | currency:' ':2}}</td>
                             <td>
                                 <span ng-class="{'no-print': dateType==='G'}" ng-show="dateType==='H'">{{student.lastUpdate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
                                 <span ng-class="{'no-print': dateType==='H'}" ng-show="dateType==='G'">{{student.lastUpdate | date: 'yyyy-MM-dd'}}</span>
@@ -211,7 +230,17 @@
                         </tr>
                         <tr class="blank_row no-print" style="height: 10px !important; background-color: #FFFFFF;"
                             ng-show="!students || students.length ==0">
-                            <td colspan="7">لا توجد بيانات</td>
+                            <td colspan="10">لا توجد بيانات</td>
+                        </tr>
+                        <tr ng-if="students.length > 0">
+                            <td class="info" colspan="5">
+                                <span class="pull-left">المجموع الكلي(جميع القيم بالريال السعودي)</span>
+                            </td>
+                            <td class="success" colspan="1">{{students | sumByKey:'totalNet' | currency:'':2}}</td>
+                            <td class="success" colspan="1">{{students | sumByKey:'totalPaid' | currency:'':2}}</td>
+                            <td class="success" colspan="1">{{students | sumByKey:'totalRemain' | currency:'':2}}</td>
+                            <td colspan="1"></td>
+                            <td colspan="1"></td>
                         </tr>
                         </tbody>
                     </table>

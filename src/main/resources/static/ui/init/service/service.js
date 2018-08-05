@@ -417,12 +417,32 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
         });
     };
 
+    this.openStudentDetailsModel = function (student) {
+        return $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: '/ui/partials/student/studentDetails.html',
+            controller: 'studentDetailsCtrl',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'lg',
+            resolve: {
+                student: ['StudentService', function (StudentService) {
+                    return StudentService.findOne(student.id).then(function (data) {
+                        return data;
+                    });
+                }]
+            }
+        });
+    };
+
     /**************************************************************
      *                                                            *
      * Account Model                                              *
      *                                                            *
      *************************************************************/
-    this.openAccountCreateModel = function () {
+    this.openAccountCreateModel = function (student) {
         return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
@@ -430,7 +450,14 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             templateUrl: '/ui/partials/account/accountCreate.html',
             controller: 'accountCreateCtrl',
             backdrop: 'static',
-            keyboard: false
+            keyboard: false,
+            resolve: {
+                account: function () {
+                    var account = {};
+                    account.student = student;
+                    return account;
+                }
+            }
         });
     };
 
@@ -916,17 +943,6 @@ app.service('ReportModelProvider', ['$uibModal', function ($uibModal) {
      * Account                                                    *
      *                                                            *
      *************************************************************/
-    this.openReportPrintContractModel = function () {
-        return $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: "/ui/partials/report/account/printContract.html",
-            controller: "printContractCtrl",
-            backdrop: 'static',
-            keyboard: false
-        });
-    };
     this.openReportAccountByBranchModel = function () {
         return $uibModal.open({
             animation: true,
@@ -949,17 +965,6 @@ app.service('ReportModelProvider', ['$uibModal', function ($uibModal) {
             keyboard: false
         });
     };
-    this.openReportAccountByMasterCategoryModel = function () {
-        return $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: "/ui/partials/report/account/accountByMasterCategory.html",
-            controller: "accountByMasterCategoryCtrl",
-            backdrop: 'static',
-            keyboard: false
-        });
-    };
     this.openReportAccountByCourseModel = function () {
         return $uibModal.open({
             animation: true,
@@ -971,6 +976,7 @@ app.service('ReportModelProvider', ['$uibModal', function ($uibModal) {
             keyboard: false
         });
     };
+
     this.openReportAccountStatementModel = function () {
         return $uibModal.open({
             animation: true,

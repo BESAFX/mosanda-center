@@ -1,9 +1,9 @@
-app.controller('accountCreateCtrl', ['StudentService', 'CourseService', 'AccountService', 'ModalProvider', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', '$uibModal',
-    function (StudentService, CourseService, AccountService, ModalProvider, $scope, $rootScope, $timeout, $log, $uibModalInstance, $uibModal) {
+app.controller('accountCreateCtrl', ['StudentService', 'CourseService', 'AccountService', 'ModalProvider', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', '$uibModal', 'account',
+    function (StudentService, CourseService, AccountService, ModalProvider, $scope, $rootScope, $timeout, $log, $uibModalInstance, $uibModal, account) {
 
         $scope.buffer = {};
 
-        $scope.account = {};
+        $scope.account = account;
 
         $scope.students = [];
 

@@ -65,6 +65,13 @@
                                                 <span>المدرب / </span>
                                                 <span>{{$select.selected.instructor}}</span>
                                             </span>
+                                            <span class="mdl-list__item-sub-title">
+                                                <span>حالة الدورة / </span>
+                                                <span ng-class="{
+                                                    'label label-success': $select.selected.courseCondition==='Opened',
+                                                    'label label-danger': $select.selected.courseCondition==='Closed'
+                                                    }">{{$select.selected.courseConditionInArabic}}</span>
+                                            </span>
                                         </span>
                                     </li>
 
@@ -89,6 +96,13 @@
                                             <span class="mdl-list__item-sub-title">
                                                 <span>المدرب / </span>
                                                 <span>{{course.instructor}}</span>
+                                            </span>
+                                            <span class="mdl-list__item-sub-title">
+                                                <span>حالة الدورة / </span>
+                                                <span ng-class="{
+                                                    'label label-success': course.courseCondition==='Opened',
+                                                    'label label-danger': course.courseCondition==='Closed'
+                                                    }">{{course.courseConditionInArabic}}</span>
                                             </span>
                                         </span>
                                     </li>

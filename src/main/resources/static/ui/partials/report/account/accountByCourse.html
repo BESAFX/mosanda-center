@@ -49,8 +49,7 @@
                         </li>
 
                     </ui-select-match>
-                    <ui-select-choices
-                            repeat="course in courses | filter: $select.search | orderBy:'code' track by course.id">
+                    <ui-select-choices repeat="course in courses | filter: $select.search | orderBy:'code' track by course.id">
 
                         <div class="mdl-menu__item--full-bleed-divider"></div>
                         <li class="mdl-list__item mdl-list__item--two-line"

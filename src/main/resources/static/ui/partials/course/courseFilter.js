@@ -3,7 +3,13 @@ app.controller('courseFilterCtrl', ['BranchService', '$scope', '$rootScope', '$t
 
         $scope.modalTitle = title;
 
+        $scope.addSortBy = function () {
+            var sortBy = {};
+            $scope.pageCourse.sorts.push(sortBy);
+        };
+
         $scope.submit = function () {
+            $scope.pageCourse.page = $scope.pageCourse.currentPage - 1;
             $uibModalInstance.close($scope.paramCourse);
         };
 

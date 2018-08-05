@@ -1144,8 +1144,122 @@ app.controller("menuCtrl", [
          **************************************************************************************************************/
         $scope.paramCourse = {};
         $scope.courses = [];
+        $scope.courses.checkAll = false;
         $scope.itemsCourse = [];
         $scope.itemsCourse.push({'id': 2, 'type': 'title', 'name': 'الدورات'});
+
+        $scope.pageCourse = {};
+        $scope.pageCourse.sorts = [];
+        $scope.pageCourse.page = 0;
+        $scope.pageCourse.totalPages = 0;
+        $scope.pageCourse.currentPage = $scope.pageCourse.page + 1;
+        $scope.pageCourse.currentPageString = ($scope.pageCourse.page + 1) + ' / ' + $scope.pageCourse.totalPages;
+        $scope.pageCourse.size = 25;
+        $scope.pageCourse.first = true;
+        $scope.pageCourse.last = true;
+
+        $scope.openFilterCourse = function () {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: '/ui/partials/course/courseFilter.html',
+                controller: 'courseFilterCtrl',
+                scope: $scope,
+                backdrop: 'static',
+                keyboard: false,
+                resolve: {
+                    title: function () {
+                        return 'البحث فى الدورات';
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (paramCourse) {
+                $scope.paramCourse = paramCourse;
+                $scope.searchCourse($scope.paramCourse);
+            }, function () {
+            });
+        };
+        $scope.searchCourse = function (paramCourse) {
+            var search = [];
+
+            search.push('size=');
+            search.push($scope.pageCourse.size);
+            search.push('&');
+
+            search.push('page=');
+            search.push($scope.pageCourse.page);
+            search.push('&');
+
+            angular.forEach($scope.pageCourse.sorts, function (sortBy) {
+                search.push('sort=');
+                search.push(sortBy.name + ',' + sortBy.direction);
+                search.push('&');
+            });
+
+            if (paramCourse.instructor) {
+                search.push('instructor=');
+                search.push(paramCourse.instructor);
+                search.push('&');
+            }
+            if (paramCourse.codeFrom) {
+                search.push('codeFrom=');
+                search.push(paramCourse.codeFrom);
+                search.push('&');
+            }
+            if (paramCourse.codeTo) {
+                search.push('codeTo=');
+                search.push(paramCourse.codeTo);
+                search.push('&');
+            }
+            if (paramCourse.branch) {
+                search.push('branchId=');
+                search.push(paramCourse.branch.id);
+                search.push('&');
+            }
+            if (paramCourse.master) {
+                search.push('masterId=');
+                search.push(paramCourse.master.id);
+                search.push('&');
+            }
+
+            CourseService.filter(search.join("")).then(function (data) {
+                $scope.courses = data.content;
+
+                $scope.pageCourse.currentPage = $scope.pageCourse.page + 1;
+                $scope.pageCourse.first = data.first;
+                $scope.pageCourse.last = data.last;
+                $scope.pageCourse.number = data.number;
+                $scope.pageCourse.numberOfElements = data.numberOfElements;
+                $scope.pageCourse.totalElements = data.totalElements;
+                $scope.pageCourse.totalPages = data.totalPages;
+                $scope.pageCourse.currentPageString = ($scope.pageCourse.page + 1) + ' / ' + $scope.pageCourse.totalPages;
+
+                $scope.itemsCourse = [];
+                $scope.itemsCourse.push({'id': 2, 'type': 'title', 'name': 'الدورات', 'style': 'font-weight:bold'});
+                if(paramCourse.branch){
+                    $scope.itemsCourse.push({'id': 3, 'type': 'title', 'name': 'فرع', 'style': 'font-weight:bold'});
+                    $scope.itemsCourse.push({
+                        'id': 4,
+                        'type': 'title',
+                        'name': ' [ ' + paramCourse.branch.code + ' ] ' + paramCourse.branch.name
+                    });
+                }
+
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 300);
+            });
+        };
+        $scope.selectNextCoursesPage = function () {
+            $scope.pageCourse.page++;
+            $scope.searchCourse($scope.paramCourse);
+        };
+        $scope.selectPrevCoursesPage = function () {
+            $scope.pageCourse.page--;
+            $scope.searchCourse($scope.paramCourse);
+        };
         $scope.newCourse = function () {
             ModalProvider.openCourseCreateModel().result.then(function (data) {
                 $scope.courses.splice(0, 0, data);
@@ -1178,69 +1292,6 @@ app.controller("menuCtrl", [
                     });
                 }
             })
-        };
-        $scope.openFilterCourse = function () {
-            var modalInstance = $uibModal.open({
-                animation: true,
-                ariaLabelledBy: 'modal-title',
-                ariaDescribedBy: 'modal-body',
-                templateUrl: '/ui/partials/course/courseFilter.html',
-                controller: 'courseFilterCtrl',
-                scope: $scope,
-                backdrop: 'static',
-                keyboard: false,
-                resolve: {
-                    title: function () {
-                        return 'البحث فى الدورات';
-                    }
-                }
-            });
-
-            modalInstance.result.then(function (paramCourse) {
-                $scope.paramCourse = paramCourse;
-                $scope.searchCourse($scope.paramCourse);
-            }, function () {
-            });
-        };
-        $scope.searchCourse = function (paramCourse) {
-            var search = [];
-            if (paramCourse.instructor) {
-                search.push('instructor=');
-                search.push(paramCourse.instructor);
-                search.push('&');
-            }
-            if (paramCourse.codeFrom) {
-                search.push('codeFrom=');
-                search.push(paramCourse.codeFrom);
-                search.push('&');
-            }
-            if (paramCourse.codeTo) {
-                search.push('codeTo=');
-                search.push(paramCourse.codeTo);
-                search.push('&');
-            }
-            if (paramCourse.branch) {
-                search.push('branchId=');
-                search.push(paramCourse.branch.id);
-                search.push('&');
-            }
-            if (paramCourse.master) {
-                search.push('masterId=');
-                search.push(paramCourse.master.id);
-                search.push('&');
-            }
-
-            CourseService.filter(search.join("")).then(function (data) {
-                $scope.courses = data;
-                $scope.itemsCourse = [];
-                $scope.itemsCourse.push({'id': 2, 'type': 'title', 'name': 'الدورات', 'style': 'font-weight:bold'});
-                $scope.itemsCourse.push({'id': 3, 'type': 'title', 'name': 'فرع', 'style': 'font-weight:bold'});
-                $scope.itemsCourse.push({
-                    'id': 4,
-                    'type': 'title',
-                    'name': ' [ ' + paramCourse.branch.code + ' ] ' + paramCourse.branch.name
-                });
-            });
         };
         $scope.rowMenuCourse = [
             {

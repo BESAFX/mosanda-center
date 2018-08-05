@@ -26,6 +26,11 @@ app.factory("AccountService", ['$http', '$log',
                     return response.data;
                 });
             },
+            findByStudent: function (studentId) {
+                return $http.get("/api/account/findByStudent/" + studentId).then(function (response) {
+                    return response.data;
+                });
+            },
             findByBranch: function (branchId) {
                 return $http.get("/api/account/findByBranch/" + branchId).then(function (response) {
                     return response.data;

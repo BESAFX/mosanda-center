@@ -37,6 +37,7 @@ public class StudentRest {
     public static final String FILTER_TABLE = "" +
             "**," +
             "branch[id,code,name]," +
+            "accounts[id]," +
             "lastPerson[id,contact[id,shortName]]";
 
     @Autowired

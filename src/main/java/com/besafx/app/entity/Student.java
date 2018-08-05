@@ -9,7 +9,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -46,10 +48,37 @@ public class Student implements Serializable {
     @JoinColumn(name = "branch")
     private Branch branch;
 
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    private List<Account> accounts = new ArrayList<>();
+
     @JsonCreator
     public static Student Create(String jsonString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         Student student = mapper.readValue(jsonString, Student.class);
         return student;
+    }
+
+    public Double getTotalNet() {
+        try {
+            return this.accounts.stream().mapToDouble(Account::getNet).sum();
+        } catch (Exception ex) {
+            return 0.0;
+        }
+    }
+
+    public Double getTotalPaid() {
+        try {
+            return this.accounts.stream().mapToDouble(Account::getPaid).sum();
+        } catch (Exception ex) {
+            return 0.0;
+        }
+    }
+
+    public Double getTotalRemain() {
+        try {
+            return this.accounts.stream().mapToDouble(Account::getPaid).sum();
+        } catch (Exception ex) {
+            return 0.0;
+        }
     }
 }

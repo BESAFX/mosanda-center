@@ -103,14 +103,14 @@
                             </div>
 
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <label for="startDate" class="control-label">تاريخ الدورة من</label>
+                                <label for="startDate" class="control-label">تاريخ البداية</label>
                                 <div dir="ltr" class="input-group" id="startDate" ng-init="calendar1='G'">
-                        <span class="input-group-addon">
-                            <a href="" ng-click="calendar1==='G'?calendar1='H':calendar1='G'">
-                                <span ng-show="calendar1==='G'">ميلادي</span>
-                                <span ng-show="calendar1==='H'">هجري</span>
-                            </a>
-                        </span>
+                                    <span class="input-group-addon">
+                                        <a href="" ng-click="calendar1==='G'?calendar1='H':calendar1='G'">
+                                            <span ng-show="calendar1==='G'">ميلادي</span>
+                                            <span ng-show="calendar1==='H'">هجري</span>
+                                        </a>
+                                    </span>
                                     <div style="position: relative">
                                         <input style="position: absolute" ng-show="calendar1==='H'"
                                                type="text"
@@ -137,14 +137,14 @@
                             </div>
 
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <label for="endDate" class="control-label">تاريخ الدورة إلى</label>
+                                <label for="endDate" class="control-label">تاريخ الانتهاء</label>
                                 <div dir="ltr" class="input-group" id="endDate" ng-init="calendar2='G'">
-                        <span class="input-group-addon">
-                            <a href="" ng-click="calendar2==='G'?calendar2='H':calendar2='G'">
-                                <span ng-show="calendar2==='G'">ميلادي</span>
-                                <span ng-show="calendar2==='H'">هجري</span>
-                            </a>
-                        </span>
+                                    <span class="input-group-addon">
+                                        <a href="" ng-click="calendar2==='G'?calendar2='H':calendar2='G'">
+                                            <span ng-show="calendar2==='G'">ميلادي</span>
+                                            <span ng-show="calendar2==='H'">هجري</span>
+                                        </a>
+                                    </span>
                                     <div style="position: relative">
                                         <input style="position: absolute" ng-show="calendar2==='H'"
                                                type="text"
@@ -168,6 +168,19 @@
                                                kdatepicker/>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                 ng-init="course.courseCondition='Cash'">
+                                <label for="courseCondition" class="control-label">الوضع</label>
+                                <select id="courseCondition"
+                                        required="required"
+                                        disable-validation-message=""
+                                        class="form-control"
+                                        ng-model="course.courseCondition">
+                                    <option value="Opened">سارية</option>
+                                    <option value="Closed">مغلقة</option>
+                                </select>
                             </div>
 
                         </div>

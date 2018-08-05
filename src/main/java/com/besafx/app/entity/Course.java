@@ -1,5 +1,6 @@
 package com.besafx.app.entity;
 
+import com.besafx.app.entity.enums.CourseCondition;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +46,9 @@ public class Course implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
+    @Enumerated(EnumType.STRING)
+    private CourseCondition courseCondition;
+
     @ManyToOne
     @JoinColumn(name = "master")
     private Master master;
@@ -65,5 +69,14 @@ public class Course implements Serializable {
         Course course = mapper.readValue(jsonString, Course.class);
         return course;
     }
+
+    public String getCourseConditionInArabic(){
+        try{
+            return this.courseCondition.getName();
+        }catch (Exception ex){
+            return "";
+        }
+    }
+
 
 }

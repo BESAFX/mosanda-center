@@ -64,6 +64,12 @@
                 style="margin-top: 2px;">
                 <li>
                     <a href=""
+                       ng-click="searchCourse(paramCourse)"
+                       tooltip-append-to-body="true"
+                       uib-tooltip="تحديث">
+                        <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/refresh.{{iconSetType}}" width="24" height="24">
+                    </a>
+                    <a href=""
                        ng-click="openFilterCourse()"
                        tooltip-append-to-body="true"
                        uib-tooltip="بحث">
@@ -84,18 +90,63 @@
         </div>
         <div class="panel-body panel-body-table">
 
+            <div class="form-group row" ng-if="pageCourse.totalElements > 0">
+
+                <div class="btn-toolbar pull-right">
+
+                    <div class="btn-group" data-toggle="buttons">
+
+                        <button uib-tooltip="السابق"
+                                tooltip-append-to-body="true"
+                                ng-disabled="pageCourse.first"
+                                type="button"
+                                ng-click="selectPrevCoursesPage()"
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1 pull-right">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </button>
+
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 pull-left">
+                            <input dir="rtl"
+                                   type="text"
+                                   readonly
+                                   class="form-control"
+                                   ng-model="pageCourse.currentPageString">
+                        </div>
+
+                        <button uib-tooltip="التالي"
+                                tooltip-append-to-body="true"
+                                ng-disabled="pageCourse.last"
+                                type="button"
+                                ng-click="selectNextCoursesPage()"
+                                class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1 pull-right">
+                            <i class="material-icons">keyboard_arrow_left</i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
             <div class="form-group row" ng-show="toggleList===1">
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
+
+                            <th class="fit no-print">
+                                <label id ="checkAllCourses" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-0">
+                                    <input type="checkbox" id="checkbox-0" class="mdl-checkbox__input" ng-model="courses.checkAll" ng-change="checkAllCourses()">
+                                </label>
+                            </th>
+
                             <th>
                                 <span>#</span>
                             </th>
 
                             <th>
-                                <span> رقم الدورة</span>
+                                <span>رقم الدورة</span>
                             </th>
 
                             <th>
@@ -103,7 +154,7 @@
                             </th>
 
                             <th>
-                                <span>تاريخ النهاية</span>
+                                <span>تاريخ الانتهاء</span>
                             </th>
 
                             <th>
@@ -133,9 +184,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="course in courses" context-menu="rowMenuCourse">
+                        <tr ng-repeat="course in courses"
+                            ng-class="{'mdl-color--grey-400' : course.isSelected}"
+                            context-menu="rowMenuCourse">
+                            <td class="fit no-print">
+                                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect check" for="checkbox-course-{{course.id}}">
+                                    <input type="checkbox" id="checkbox-course-{{course.id}}" class="mdl-checkbox__input" ng-model="course.isSelected" ng-click="checkCourse()">
+                                </label>
+                            </td>
                             <td>{{$index+1}}</td>
-                            <td>{{course.code}}</td>
+                            <td>
+                                <span ng-class="{
+                                'label label-success': course.courseCondition==='Opened',
+                                'label label-danger': course.courseCondition==='Closed'
+                                }">{{course.courseConditionInArabic}}</span>
+                                <span>{{course.code}}</span>
+                            </td>
                             <td>
                                 <span ng-class="{'no-print': dateType==='G'}" ng-show="dateType==='H'">{{course.startDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
                                 <span ng-class="{'no-print': dateType==='H'}" ng-show="dateType==='G'">{{course.startDate | date: 'yyyy-MM-dd'}}</span>
@@ -153,7 +217,7 @@
                         </tr>
                         <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
                             ng-show="!courses || courses.length ==0">
-                            <td colspan="10">لا توجد بيانات</td>
+                            <td colspan="11">لا توجد بيانات</td>
                         </tr>
                         </tbody>
                     </table>
