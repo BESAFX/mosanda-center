@@ -1,6 +1,5 @@
 package com.besafx.app.entity;
 
-import com.besafx.app.rest.AccountRest;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,6 +58,8 @@ public class Contact implements Serializable {
     private String address;
 
     private String mobile;
+
+    private String email;
 
     private String phone;
 

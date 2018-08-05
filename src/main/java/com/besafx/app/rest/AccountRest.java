@@ -3,8 +3,8 @@ package com.besafx.app.rest;
 import com.besafx.app.async.TransactionalService;
 import com.besafx.app.auditing.EntityHistoryListener;
 import com.besafx.app.auditing.PersonAwareUserDetails;
-import com.besafx.app.config.SendSMS;
-import com.besafx.app.entity.*;
+import com.besafx.app.entity.Account;
+import com.besafx.app.entity.Person;
 import com.besafx.app.search.AccountSearch;
 import com.besafx.app.service.*;
 import com.besafx.app.ws.Notification;
@@ -13,7 +13,6 @@ import com.besafx.app.ws.NotificationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.bohnman.squiggly.Squiggly;
 import com.github.bohnman.squiggly.util.SquigglyUtils;
-import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +36,7 @@ public class AccountRest {
             "person[id,contact[id,shortName]]," +
             "course[id,code,master[id,code,name,branch[id,code,name]]]," +
             "student[id,contact[**]]," +
-            "accountPayments[**,person[id,contact[id,shortName]]]," +
+            "accountPayments[**,-account,-bankTransaction,person[id,contact[id,shortName]]]," +
             "accountAttaches[**,attach[**,person[id,contact[id,shortName]]]]," +
             "accountConditions[**,person[id,contact[id,shortName]]]," +
             "accountNotes[**,person[id,contact[id,shortName]]]";

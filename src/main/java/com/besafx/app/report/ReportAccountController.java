@@ -1,5 +1,6 @@
 package com.besafx.app.report;
 
+import com.besafx.app.async.AsyncContractGenerator;
 import com.besafx.app.component.ReportExporter;
 import com.besafx.app.entity.Account;
 import com.besafx.app.enums.ExportType;
@@ -33,7 +34,16 @@ public class ReportAccountController {
     private AccountService accountService;
 
     @Autowired
+    private AsyncContractGenerator asyncContractGenerator;
+
+    @Autowired
     private ReportExporter reportExporter;
+
+    @RequestMapping(value = "/report/contract/{accountId}", method = RequestMethod.GET, produces = "application/pdf")
+    @ResponseBody
+    public void printOffer(@PathVariable(value = "accountId") Long accountId, HttpServletResponse response) throws Exception {
+        reportExporter.export("نموذج تسجيل دورة", ExportType.PDF, response, asyncContractGenerator.generate(accountId).get());
+    }
 
     @RequestMapping(value = "/report/AccountByBranches", method = RequestMethod.GET, produces = "application/pdf")
     @ResponseBody

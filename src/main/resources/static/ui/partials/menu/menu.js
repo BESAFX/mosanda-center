@@ -1787,27 +1787,8 @@ app.controller("menuCtrl", [
                 return account.accountNotes.push(data);
             });
         };
-        $scope.printAccount = function (account) {
-            var modalInstance = $uibModal.open({
-                animation: true,
-                ariaLabelledBy: 'modal-title',
-                ariaDescribedBy: 'modal-body',
-                templateUrl: '/ui/partials/account/accountContract.html',
-                controller: 'accountContractCtrl',
-                backdrop: 'static',
-                keyboard: false,
-                resolve: {
-                    account: function () {
-                        return account;
-                    }
-                }
-            });
-
-            modalInstance.result.then(function (buffer) {
-
-            }, function () {
-                console.info('Modal dismissed at: ' + new Date());
-            });
+        $scope.printContract = function (account) {
+            window.open('/report/contract/' + account.id);
         };
         $scope.deleteAccount = function (account) {
             ModalProvider.openConfirmModel("حذف الطلاب", "delete", "هل تود حذف التسجيل فعلاً؟").result.then(function (value) {
@@ -1942,7 +1923,7 @@ app.controller("menuCtrl", [
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.printAccount($itemScope.account);
+                    $scope.printContract($itemScope.account);
                 }
             }
         ];
