@@ -1,0 +1,1328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Contract" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isSummaryWithPageHeaderAndFooter="true" whenResourceMissingType="Empty" uuid="d667083a-5ee3-46f8-b604-36494df2d410">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<import value="com.besafx.app.util.DateConverter"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#DADADA">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#DADADA">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<parameter name="REPORT_TITLE" class="java.lang.String"/>
+	<parameter name="REPORT_SUB_TITLE" class="java.lang.String"/>
+	<parameter name="REPORT_FOOTER" class="java.lang.String"/>
+	<parameter name="LOGO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="BACKGROUND" class="java.lang.String" isForPrompting="false"/>
+	<field name="code" class="java.lang.Integer"/>
+	<field name="registerDate" class="java.util.Date"/>
+	<field name="paymentType" class="com.besafx.app.entity.enums.PaymentType"/>
+	<field name="price" class="java.lang.Double"/>
+	<field name="discount" class="java.lang.Double"/>
+	<field name="profit" class="java.lang.Double"/>
+	<field name="premiumAmount" class="java.lang.Double"/>
+	<field name="course" class="com.besafx.app.entity.Course"/>
+	<field name="student" class="com.besafx.app.entity.Student"/>
+	<field name="note" class="java.lang.String"/>
+	<field name="person" class="com.besafx.app.entity.Person"/>
+	<field name="net" class="java.lang.Double"/>
+	<field name="paid" class="java.lang.Double"/>
+	<field name="remain" class="java.lang.Double"/>
+	<background>
+		<band height="842" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<frame>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="595" height="842" uuid="2362171d-4b4e-4fce-8dd3-a845fe0aecd4"/>
+				<box padding="0">
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+					<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="595" height="842" uuid="21610afe-ecca-460a-9f93-927dcb83b68f"/>
+					<imageExpression><![CDATA["src/main/resources/report/image/Background.jpg"]]></imageExpression>
+				</image>
+			</frame>
+		</band>
+	</background>
+	<title>
+		<band height="80">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="32" y="0" width="530" height="40" uuid="0038de5d-cce4-45fd-ac35-73b107328f2c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box padding="0">
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font fontName="PT Bold Heading" size="15" isBold="false" isUnderline="true"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" spacingBefore="0" spacingAfter="0"/>
+				</textElement>
+				<text><![CDATA[نموذج تسجيل دورة]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="620">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<frame>
+				<reportElement x="30" y="10" width="532" height="150" uuid="942522e8-896a-4bad-9206-7d2a7391e5c0"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<frame>
+					<reportElement x="430" y="0" width="102" height="150" uuid="b11c5a15-6702-499c-96da-efe7d1b3c6a9"/>
+					<staticText>
+						<reportElement x="0" y="0" width="102" height="150" uuid="69f2e9dd-b59b-41fc-b4ab-d3f2435dec7e"/>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="PT Bold Heading" size="14"/>
+						</textElement>
+						<text><![CDATA[البيانات الأساسية]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="10" y="11" width="414" height="41" uuid="cb879233-38e5-497c-8cdc-8de96fcfffac">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="86" height="41" uuid="86e02570-5040-475f-837f-fc8ba4771b25">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="86" height="21" uuid="3a58de6c-cb67-4398-87e7-6f53820b30b8"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="86" height="21" uuid="fc5bb1d2-6922-40c3-962b-10c4857b0f5d"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="86" height="21" uuid="96082c73-dca8-4760-b84e-41b7208d5fca"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[الاسم الرابع]]></text>
+							</staticText>
+						</frame>
+						<frame>
+							<reportElement x="0" y="21" width="86" height="20" uuid="a6064f15-5917-4e25-a19a-330f55bb0604"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="86" height="20" uuid="b6a1d9e9-b011-4e4e-91d1-8b8a9e155212"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="86" height="20" uuid="0f4fac42-139a-46c6-baa4-b852168007b7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{student}.getContact().getForthName()]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="86" y="0" width="82" height="41" uuid="516814f6-aa19-48e9-aa41-aabf35847dee">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="82" height="21" uuid="4ea783e9-8ef5-4d89-92fb-df17b31e9698"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="82" height="21" uuid="03b22633-38ac-4aa4-8f7d-3e594e5452f8"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="82" height="21" uuid="9103f7cc-f8ef-4f8d-a703-871c54cfadb5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[الاسم الثالث]]></text>
+							</staticText>
+						</frame>
+						<frame>
+							<reportElement x="0" y="21" width="82" height="20" uuid="45c5bfd9-f56e-48b1-a506-9dacd62c0277"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="82" height="20" uuid="de3e917f-9729-4a0b-9cc6-19af924abbee"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="82" height="20" uuid="b255d142-96d9-4321-b1c5-2061583d5ab0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{student}.getContact().getThirdName()]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="168" y="0" width="82" height="41" uuid="7c7925a5-5a9d-406e-ae87-87270651911d">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="82" height="21" uuid="82ad9cf7-f25e-4d30-a97a-66e4d4a341ac"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="82" height="21" uuid="3095e75a-5eb5-4b60-9819-7b04f8b9151b"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="82" height="21" uuid="ca811bd8-306d-4393-83a5-df37288218de"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[الاسم الثاني]]></text>
+							</staticText>
+						</frame>
+						<frame>
+							<reportElement x="0" y="21" width="82" height="20" uuid="8471a348-4ade-45aa-950c-beb78e598bb3"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="82" height="20" uuid="e70ce8f6-9d30-4fdc-9cac-ed15cdad80ca"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="82" height="20" uuid="e44f85d8-4106-4878-ab99-2e31beef7393"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{student}.getContact().getSecondName()]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="250" y="0" width="82" height="41" uuid="647de6ee-04f5-4f76-9668-eb399c9fa7ba">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="82" height="21" uuid="badd8470-ea1a-450f-b37f-0a735f7e6b88"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="82" height="21" uuid="610b61c0-0a90-42d6-b262-8b211a8e7ecf"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="82" height="21" uuid="7812d1d9-b417-47e9-8436-35d130076daa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[الاسم الأول]]></text>
+							</staticText>
+						</frame>
+						<frame>
+							<reportElement x="0" y="21" width="82" height="20" uuid="37661e54-694f-4a79-8082-6671547a1014"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="82" height="20" uuid="22c5f843-e67c-42d6-ac71-eeb69291b522"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="82" height="20" uuid="dc9a1c27-9362-4683-8860-45e766993e2a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{student}.getContact().getFirstName()]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="332" y="0" width="82" height="41" uuid="b19c73dd-c5d8-4334-94dc-0518c2740a0a"/>
+						<rectangle radius="10">
+							<reportElement x="0" y="0" width="82" height="41" uuid="55765b51-fe08-4e77-880a-613e63a92ca1"/>
+							<graphicElement>
+								<pen lineStyle="Solid" lineColor="#FFD040"/>
+							</graphicElement>
+						</rectangle>
+						<staticText>
+							<reportElement x="0" y="0" width="82" height="41" uuid="5063d4b4-6fc5-45a8-af26-f4623ebc46df"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="PT Bold Heading" size="14"/>
+							</textElement>
+							<text><![CDATA[اسم المتدرب]]></text>
+						</staticText>
+					</frame>
+				</frame>
+				<frame>
+					<reportElement x="10" y="61" width="414" height="34" uuid="24e56ee8-2529-4bd4-b514-4a2a4b061edc">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="207" height="34" uuid="7a015379-ae03-49d4-bec5-bd8112fea924">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="104" height="34" uuid="a94a9a8e-2d6c-429a-867e-55186a62635e"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="104" height="34" uuid="9f49e3bb-af66-4804-8aa8-d9115e4d6a8f"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="104" height="34" uuid="93a39a2a-14c2-4b13-b783-f9eaa016f724"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{student}.getContact().getMobile()]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="104" y="0" width="103" height="34" uuid="242bf1f7-5719-426c-91f3-b827d4841ea7"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="34" uuid="852f9df0-25b2-4c1a-ae63-4c2d6d59db5a"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="34" uuid="d7dc2f4d-535c-4bea-979c-428db8a06f79"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[رقم الجوال]]></text>
+							</staticText>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="207" y="0" width="207" height="34" uuid="0ad69af6-6a8a-47d6-ae84-0051a6f585d6">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="104" height="34" uuid="81f361df-e802-4d1c-ba3d-2b09d4193cf1"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="104" height="34" uuid="a938f13a-dae1-4d59-ab10-c484e5983112"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="104" height="34" uuid="67b6267a-1a56-4002-9a80-d57e56285385"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{student}.getContact().getIdentityNumber()]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="104" y="0" width="103" height="34" uuid="c18c700c-6a1b-42b8-9e66-393dc102ee5e"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="34" uuid="6c073b28-7881-4801-8307-2c23bcf7087d"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="34" uuid="1307d664-0fd5-4f33-a3b5-e9ab7aa74007"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[بطاقة الأحوال]]></text>
+							</staticText>
+						</frame>
+					</frame>
+				</frame>
+				<frame>
+					<reportElement x="11" y="102" width="414" height="34" uuid="803b6506-061f-4942-95b5-983af77820f7">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="207" height="34" uuid="fcc92fb5-4f86-4b82-968a-7b5bf74f1923">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="104" height="34" uuid="b0252fc9-4827-4a44-8a60-806bbeefecad"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="104" height="34" uuid="3c1ff6e6-5aff-4286-beab-e4f9b3539c47"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="104" height="34" uuid="f5e03e41-b854-48c1-9235-df4228ef2e4d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[DateConverter.getHijriStringFromDateRTL($F{student}.getContact().getBirthDate())]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="104" y="0" width="103" height="34" uuid="96b18ea5-3c0d-481e-b831-4796e41c723c"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="34" uuid="e9e6a6b6-b60d-4abf-ba25-ae17883578a2"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="34" uuid="41a1d0e3-6a00-4944-a8ef-04dcac79d034"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[تاريخ الميلاد]]></text>
+							</staticText>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="207" y="0" width="207" height="34" uuid="27adb5a6-26fa-451c-b81c-edc6938cd917">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="104" height="34" uuid="7b037601-5cdc-482d-a506-00f820a4312c"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="104" height="34" uuid="cecb02d7-f1a9-46da-bea9-e23a01d3bf95"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="104" height="34" uuid="c490382b-9028-4edc-b831-b02d17c985c6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{student}.getContact().getEmail()]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="104" y="0" width="103" height="34" uuid="5662e9fe-221e-4f78-aa59-cd04cb59864b"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="34" uuid="022d0850-71f1-4753-875e-a788a5c41e6a"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="34" uuid="5e565c63-7379-4868-a539-31dab3ba41fa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[الإيميل]]></text>
+							</staticText>
+						</frame>
+					</frame>
+				</frame>
+			</frame>
+			<frame>
+				<reportElement x="30" y="170" width="532" height="110" uuid="3fa56640-569e-4103-9340-a07b2e2824a2"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<frame>
+					<reportElement x="430" y="0" width="102" height="110" uuid="47c92bb4-5c02-46c9-a7fc-d081b5022906"/>
+					<staticText>
+						<reportElement x="0" y="0" width="102" height="110" uuid="ecc8d2f5-83dd-4fe3-af78-df214bfa4721"/>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="PT Bold Heading" size="14"/>
+						</textElement>
+						<text><![CDATA[البيانات الدراسية/الوظيفية ]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="11" y="21" width="414" height="34" uuid="19df30bb-b0fb-4584-a120-f7fe5b20967d">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="207" height="34" uuid="3ba22641-4858-48e9-bd97-0edb0bef6f2d">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="104" height="34" uuid="920a6215-98d4-475b-9c0a-043f1d3c8828"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="104" height="34" uuid="0c5af547-98c5-4a64-ba00-16af96101673"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="104" height="34" uuid="fd6116b3-3de4-44dd-9ab2-21589abe5166"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="104" y="0" width="103" height="34" uuid="368ac881-6635-411b-b835-d543c09da90b"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="34" uuid="23a09c48-a352-4e44-9a37-17f76223027f"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="34" uuid="6ba02821-14f7-49b2-8f6b-fe62a0381de6"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[اسم الجهة/المدرسة ]]></text>
+							</staticText>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="207" y="0" width="207" height="34" uuid="b353f656-a1c4-473e-b7c0-0e7112e874af">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="104" height="34" uuid="77c1a103-6f82-4be5-921f-beed9e438b4f"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="104" height="34" uuid="e4ee17a6-d8c8-474c-ad64-d579bd5c078c"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="104" height="34" uuid="48b1a7c0-fa8a-4e6e-ad89-6795d878893b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="104" y="0" width="103" height="34" uuid="c149408f-c92d-4e5c-87b1-57622b398351"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="34" uuid="384dbe8a-714e-47b1-a5a8-6c706e80b7cf"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="34" uuid="ccd0f8d2-164a-45b6-901d-ba601ba3d136"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[الوظيفة / المرحلة الدراسية
+]]></text>
+							</staticText>
+						</frame>
+					</frame>
+				</frame>
+				<frame>
+					<reportElement x="12" y="62" width="414" height="34" uuid="66d9d558-d96b-4f8e-b217-5675f9f68b34">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="207" height="34" uuid="10036d84-3e1b-4ca2-ae60-03704be1c44f">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="104" height="34" uuid="e401d8c7-3ab7-42df-a0f7-b5c5a8f72d96"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="104" height="34" uuid="8c6013a7-dc2c-441e-817e-3fbbec08fc2b"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="104" height="34" uuid="42b96c21-0418-4450-b4e1-2a6dd03949fa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="104" y="0" width="103" height="34" uuid="b0b3908e-584a-45d9-93d2-5a39b01ac4d8"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="34" uuid="926f8014-824f-4707-8d34-1857a42fa493"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="34" uuid="744ad8cb-bfe0-41cb-b0de-48a26a2caaf8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[تم عمل اختبار تحديد ]]></text>
+							</staticText>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="207" y="0" width="207" height="34" uuid="6c6861a8-3e03-431a-92e5-2981e2a7839c">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="104" height="34" uuid="18df97dc-f603-4999-a3cd-425d14e065d1"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="104" height="34" uuid="043b7916-85cc-4a2d-967d-abb27e12501c"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="104" height="34" uuid="0f6d31b4-86b0-43d6-bb4a-a7552e817521"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{student}.getContact().getQualification()]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="104" y="0" width="103" height="34" uuid="76b67031-61e5-4e6f-98d1-18111e3246fa"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="34" uuid="2e55b1df-163c-45b9-ac44-dc55bd79d75e"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="34" uuid="13728e30-7d5c-4e2a-9deb-d72dc8c2d1b0"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[المؤهل]]></text>
+							</staticText>
+						</frame>
+					</frame>
+				</frame>
+			</frame>
+			<frame>
+				<reportElement x="30" y="290" width="532" height="110" uuid="dec1ff8a-f125-4fe5-8829-2d0059ff7ad1"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<frame>
+					<reportElement x="430" y="0" width="102" height="110" uuid="71ab72d5-940b-4a47-b77a-3697379fdf24"/>
+					<staticText>
+						<reportElement x="0" y="0" width="102" height="110" uuid="37ef6681-65a0-4d12-b211-e4171f3dcebc"/>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="PT Bold Heading" size="14"/>
+						</textElement>
+						<text><![CDATA[بيانات التدريب]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="11" y="21" width="414" height="34" uuid="8e8cfe2b-4907-4223-894f-560c3663cf25">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="80" height="34" uuid="3a116c08-d6b3-4af7-a76f-af00ddae0855">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="80" height="17" uuid="82c16360-a4eb-4a89-9396-85f68862e0da"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="80" height="17" uuid="4a86bc97-ec8c-4e03-a729-8ef51bc05e59"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="17" uuid="e77eda26-4bf7-4294-8ab4-8f815e491ac8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading" size="8"/>
+								</textElement>
+								<text><![CDATA[تاريخ الانتهاء]]></text>
+							</staticText>
+						</frame>
+						<frame>
+							<reportElement x="0" y="17" width="80" height="17" uuid="86648814-0562-428f-b65d-6f6c0cf128fb"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="80" height="17" uuid="20cbad3e-e6ee-4797-b23f-17d192aff911"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="80" height="17" uuid="3e30652f-d80b-4493-b81e-0c0a380cc9e2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[DateConverter.getHijriStringFromDateRTL($F{course}.getEndDate())]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="80" y="0" width="80" height="34" uuid="6128f3d2-db44-41a2-8fb7-600e54ee76c1">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="80" height="17" uuid="329dcb26-fe27-47b8-aea9-5e255f6a6213"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="80" height="17" uuid="f00b3fa5-44bc-41fe-84e7-ea8b6850bbbb"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="17" uuid="6f8ee38d-d7a9-4c22-a3ca-8629c7eabc73"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading" size="8"/>
+								</textElement>
+								<text><![CDATA[تاريخ البداية]]></text>
+							</staticText>
+						</frame>
+						<frame>
+							<reportElement x="0" y="17" width="80" height="17" uuid="8b39b0f0-4552-4e55-8be6-f7480f5f8d6e"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="80" height="17" uuid="a9426211-86ef-4d60-96d6-04394b7b2b09"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="80" height="17" uuid="f302fa61-69a7-4a9a-926d-5585c14baa38"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[DateConverter.getHijriStringFromDateRTL($F{course}.getStartDate())]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="160" y="0" width="80" height="34" uuid="3c145870-51fa-40f3-85f0-0d280ea8155d">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="80" height="17" uuid="9ad72c9f-3022-4d7a-b5f7-02a570c5cd1e"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="80" height="17" uuid="3ec0f797-2c84-4a19-867f-5b2465d48713"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="17" uuid="74ee9e3d-244b-47cc-b6e6-b0eabfc28ee9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading" size="8"/>
+								</textElement>
+								<text><![CDATA[المدة]]></text>
+							</staticText>
+						</frame>
+						<frame>
+							<reportElement x="0" y="17" width="80" height="17" uuid="e04b0340-a342-4232-930f-258a4f091762"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="80" height="17" uuid="fbbd0c2c-77f7-42bf-92c4-dc6c5c2f6e19"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="80" height="17" uuid="d2851ae2-8ffe-4ecc-8194-4a70d956891a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{course}.getMaster().getPeriod()]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="240" y="0" width="174" height="34" uuid="76aab2ec-3388-4a20-8510-535e10c33208">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="120" height="34" uuid="e99b6d14-40f3-40ba-9a97-dac78bfd1aa1"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="120" height="34" uuid="20b46598-de96-4ec0-ba1a-cd1dc80a9d99"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="120" height="34" uuid="f6d497d5-5e3e-4b70-b60f-9cc775c75db5"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{course}.getMaster().getName()]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="120" y="0" width="54" height="34" uuid="adc6cbb8-cfdf-45eb-9c31-c0aad1c3a6b0"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="54" height="34" uuid="99afcabf-c0fe-4890-a1d0-152b194a941f"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="54" height="34" uuid="214d67cb-e8a9-4f25-bc52-b835e428ed33"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[اسم الدورة]]></text>
+							</staticText>
+						</frame>
+					</frame>
+				</frame>
+				<frame>
+					<reportElement x="12" y="62" width="414" height="34" uuid="4a6c96e5-fffa-4872-bef4-21ea6737db05">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="207" height="34" uuid="a8f68e79-b8c0-40be-965d-e97151f312ec">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="104" height="34" uuid="6a29e6ac-6a3c-43b6-8c06-072c25c29937"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="104" height="34" uuid="9e894741-faa5-4ea1-b744-f555c110767b"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="104" height="34" uuid="5efb88f1-6e5a-4fb4-898d-55bd23b221b1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="104" y="0" width="103" height="34" uuid="bf8045f9-379c-4544-b799-3aece02cd33f"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="34" uuid="b6890dff-18cb-4ab5-9d90-d144692dd9df"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="34" uuid="e8b5d603-f77d-4103-b984-b0eace3fd0c3"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[من أين عرفت البرنامج ؟]]></text>
+							</staticText>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="207" y="0" width="207" height="34" uuid="ade8a9ab-2580-4767-875a-a536338746d1">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="104" height="34" uuid="cf47093b-e2f2-45f1-bd02-93481944f1c2"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="104" height="34" uuid="0b7a1779-cd96-4f90-aa8e-973af4afa539"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="104" height="34" uuid="e55ee5ed-9634-44e0-8801-d7ecb2f1910b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{course}.getInstructor()]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="104" y="0" width="103" height="34" uuid="c6150397-2569-41a2-8bb7-870439fc883f"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="34" uuid="23ff98ee-7b87-416f-acfc-102a2f8a891e"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="34" uuid="072743a2-e914-4063-b28c-dc296c29cf52"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[المدرب]]></text>
+							</staticText>
+						</frame>
+					</frame>
+				</frame>
+			</frame>
+			<frame>
+				<reportElement x="30" y="404" width="532" height="96" uuid="8070d8f7-c795-4ab6-a15b-188e5f292203"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<frame>
+					<reportElement x="430" y="0" width="102" height="96" uuid="670b0a17-d035-4941-9878-c6993e96fa4f"/>
+					<staticText>
+						<reportElement x="0" y="0" width="102" height="96" uuid="07665bd5-4aaf-4954-9087-0bcf47868cfa"/>
+						<box>
+							<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="PT Bold Heading" size="14"/>
+						</textElement>
+						<text><![CDATA[البيانات المالية]]></text>
+					</staticText>
+				</frame>
+				<frame>
+					<reportElement x="11" y="6" width="414" height="34" uuid="cf4b3ddd-9b53-4416-b9fd-f30260cdda61">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="105" height="34" uuid="e115beb6-1782-4d82-84b5-26c571c80252">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="105" height="17" uuid="0f7093ed-e3a6-424a-b2b6-62987c40c481"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="105" height="17" uuid="20417d40-a5b1-4133-905d-972225b6d4f4"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="105" height="17" uuid="e470d3bb-4a5f-4a3a-95a8-5cdd9cca0382"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading" size="8"/>
+								</textElement>
+								<text><![CDATA[المتبقي]]></text>
+							</staticText>
+						</frame>
+						<frame>
+							<reportElement x="0" y="17" width="105" height="17" uuid="2f520d9d-5059-4551-9dcc-0d5f726391a9"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="105" height="17" uuid="a41ebb44-17bb-4e63-be1c-41a49ee6a7f8"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="105" height="17" uuid="a57cb691-1772-4922-ad0c-55c1ec49ba9e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{remain}]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="105" y="0" width="103" height="34" uuid="b870c681-93af-4ddc-91ae-139db8fca468">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="103" height="17" uuid="94de009a-d969-4fea-8c85-b8c7415fb9a2"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="17" uuid="6916514e-c95e-44ea-bdbb-2380b662ffea"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="17" uuid="8e6f5e1c-6e75-4ce0-9e43-28f52ffaf591"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading" size="8"/>
+								</textElement>
+								<text><![CDATA[المدفوع]]></text>
+							</staticText>
+						</frame>
+						<frame>
+							<reportElement x="0" y="17" width="103" height="17" uuid="a8fe3bda-3a4d-4921-8999-d7b29cd34e8a"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="17" uuid="0e7b33b7-2c12-477e-bc28-1acf2b976532"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="103" height="17" uuid="237ebcac-21e4-44fd-af79-3afa6d2fed60"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{paid}]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="208" y="0" width="103" height="34" uuid="83a50766-d4ce-4677-bf90-0a28846f9afd">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="103" height="17" uuid="622fb3ab-b37b-463d-bae8-ff195fcd5fd9"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="17" uuid="84fae405-381e-439a-b007-9ca001af9262"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="17" uuid="9345c655-5c6a-477e-92a7-d6b6ccad4afc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading" size="8"/>
+								</textElement>
+								<text><![CDATA[الإجمالي]]></text>
+							</staticText>
+						</frame>
+						<frame>
+							<reportElement x="0" y="17" width="103" height="17" uuid="bff476b7-be02-4a87-8cc0-dc56590088fe"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="17" uuid="1b4bd104-8e7a-482f-99f3-d00b3d35a0a1"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="103" height="17" uuid="b667978e-a7cd-4731-91e9-2e2a6bff3f95"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{net}]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="311" y="0" width="103" height="34" uuid="fc875ac2-858d-4687-b6f4-ad32225647af">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="103" height="34" uuid="00fae6eb-e616-4883-8d7b-4f10f61578c4"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="103" height="34" uuid="3f31583d-0ece-46ae-8c14-27d7576f3854"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="103" height="34" uuid="58acddd6-5829-4036-bcf1-9ebec0ea2cad"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading"/>
+								</textElement>
+								<text><![CDATA[التكلفة]]></text>
+							</staticText>
+						</frame>
+					</frame>
+				</frame>
+				<frame>
+					<reportElement x="11" y="46" width="414" height="34" uuid="488cd315-fa3e-4cb7-ac22-87f0b006a4f7">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="310" height="34" uuid="02b4e1d1-e477-4fbd-af47-f66229f8dfa8">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="310" height="34" uuid="6febb864-34c9-4773-bdbf-56d36cb1e6ff"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="310" height="34" uuid="c19bc6c9-4184-482f-8cea-0603316fa4ae"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<textField isBlankWhenNull="true">
+								<reportElement x="0" y="0" width="310" height="34" uuid="9cbf4c3b-fa04-4fa8-a376-ac669cc0c1f2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Arial" size="10"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{note}]]></textFieldExpression>
+							</textField>
+						</frame>
+					</frame>
+					<frame>
+						<reportElement x="310" y="0" width="102" height="34" uuid="c3cf321c-2932-49b5-9df3-cd2888d26f8c">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+						</reportElement>
+						<frame>
+							<reportElement x="0" y="0" width="102" height="34" uuid="be01ab4a-21f2-49f3-bbdd-3403e2f4df01"/>
+							<rectangle radius="10">
+								<reportElement x="0" y="0" width="102" height="34" uuid="2110fb5b-79e1-4bca-b1d1-2a0aee70d7bb"/>
+								<graphicElement>
+									<pen lineStyle="Solid" lineColor="#FFD040"/>
+								</graphicElement>
+							</rectangle>
+							<staticText>
+								<reportElement x="0" y="0" width="102" height="34" uuid="e079bd36-f990-426d-9d70-df1a028cd19b"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="PT Bold Heading" size="10"/>
+								</textElement>
+								<text><![CDATA[ملاحظات]]></text>
+							</staticText>
+						</frame>
+					</frame>
+				</frame>
+			</frame>
+			<frame>
+				<reportElement x="405" y="510" width="157" height="100" uuid="70c91047-a745-4e2b-9ee8-7433718bf679">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="157" height="50" uuid="fc3f52a2-a69a-4ea9-ae2b-7469688d36d3"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="PT Bold Heading" size="12"/>
+					</textElement>
+					<text><![CDATA[الطالب]]></text>
+				</staticText>
+				<frame>
+					<reportElement x="0" y="50" width="157" height="50" uuid="3e130a05-241a-47d9-8c2e-53744a160e25">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="109" height="50" uuid="bd8c9c38-fe8a-475e-84ca-54c28198141f">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+						</reportElement>
+						<textField>
+							<reportElement x="0" y="0" width="109" height="25" uuid="2fa30fdf-d033-42e5-bbcb-f6477db1bf54">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{student}.getContact().getFullName()]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="0" y="25" width="109" height="25" uuid="fe772890-fd51-4f56-afe6-3dec513b052b">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="14"/>
+							</textElement>
+							<text><![CDATA[...................................]]></text>
+						</staticText>
+					</frame>
+					<frame>
+						<reportElement x="109" y="0" width="48" height="50" uuid="6b472159-72dc-48c2-994a-0fffb9224234">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+						</reportElement>
+						<staticText>
+							<reportElement x="0" y="0" width="48" height="25" uuid="186dd53d-961e-4532-be00-9b18601c9ac5"/>
+							<box>
+								<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="PT Bold Heading" size="10"/>
+							</textElement>
+							<text><![CDATA[الاســـــم]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="0" y="25" width="48" height="25" uuid="8a6d05a6-9698-4e57-b973-ebf831c182f1"/>
+							<box>
+								<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="PT Bold Heading" size="10"/>
+							</textElement>
+							<text><![CDATA[التوقيـــع]]></text>
+						</staticText>
+					</frame>
+				</frame>
+			</frame>
+			<frame>
+				<reportElement x="219" y="510" width="157" height="100" uuid="29dad78e-3e6d-40b8-a254-b671e71355ef">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="157" height="50" uuid="4b346a59-00da-48e3-a088-f74059f0864c"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="PT Bold Heading" size="12"/>
+					</textElement>
+					<text><![CDATA[المدير المالي والإداري ]]></text>
+				</staticText>
+				<frame>
+					<reportElement x="0" y="50" width="157" height="50" uuid="ed43cf43-a7a3-420b-8c24-8f7182e65559">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+					</reportElement>
+					<frame>
+						<reportElement x="0" y="0" width="109" height="50" uuid="fe941d0a-c7c9-4e03-a232-88e2f4dcaab5">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+						</reportElement>
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="109" height="25" uuid="5fb264ff-5e1f-4c7e-b7b2-36955641abb4">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="10"/>
+							</textElement>
+						</textField>
+						<staticText>
+							<reportElement x="0" y="25" width="109" height="25" uuid="de54cb3b-0bb4-4e4b-9e6c-c5518b4b9a01">
+								<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							</reportElement>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="Arial" size="14"/>
+							</textElement>
+							<text><![CDATA[...................................]]></text>
+						</staticText>
+					</frame>
+					<frame>
+						<reportElement x="109" y="0" width="48" height="50" uuid="304acd08-2037-442a-9145-2eeee2774308">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+						</reportElement>
+						<staticText>
+							<reportElement x="0" y="0" width="48" height="25" uuid="e985be0e-1a4c-48de-8ee3-fa3a8d39b2cd"/>
+							<box>
+								<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="PT Bold Heading" size="10"/>
+							</textElement>
+							<text><![CDATA[الاســـــم]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="0" y="25" width="48" height="25" uuid="a1faedec-4c94-4a46-9d3b-f3d7b5d71a70"/>
+							<box>
+								<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font fontName="PT Bold Heading" size="10"/>
+							</textElement>
+							<text><![CDATA[التوقيـــع]]></text>
+						</staticText>
+					</frame>
+				</frame>
+			</frame>
+			<frame>
+				<reportElement x="30" y="510" width="157" height="100" uuid="fbdfef67-a38c-4049-8fe2-001740ea4596">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="157" height="100" uuid="37ade007-a90f-4621-81a5-fe9cb2143c67"/>
+					<box padding="10">
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="PT Bold Heading" size="12"/>
+					</textElement>
+					<text><![CDATA[يعتمد
+المستشار الأكاديمي والمشرف]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54">
+			<frame>
+				<reportElement x="20" y="0" width="555" height="54" uuid="be2b9ab0-a223-4f58-ba49-4ab7de3c1438">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="2.25" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<frame>
+					<reportElement x="0" y="0" width="555" height="14" uuid="459f02d6-bfb6-48fe-8b96-fee4c25db74e">
+						<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+					</reportElement>
+					<textField>
+						<reportElement mode="Transparent" x="0" y="0" width="185" height="14" forecolor="#B9CD1C" backcolor="#754C29" uuid="446a00c4-a6c9-4368-a70c-9704464e63d7">
+							<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+						</reportElement>
+						<textElement textAlignment="Left" verticalAlignment="Middle">
+							<font fontName="Ubuntu" size="8" isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA["Printing Date: " + DateConverter.getHijriStringFromDateLTRWithTime(new java.util.Date())]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="420" y="0" width="135" height="14" forecolor="#B9CD1C" uuid="cc109da4-ea13-42db-aa00-c8174b45fa2f">
+							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+						</reportElement>
+						<textElement textAlignment="Center" verticalAlignment="Middle">
+							<font fontName="Ubuntu" size="6"/>
+						</textElement>
+						<text><![CDATA[Property Right Reserved @ 2018 ararhni.com]]></text>
+					</staticText>
+				</frame>
+			</frame>
+		</band>
+	</pageFooter>
+</jasperReport>
