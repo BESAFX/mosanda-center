@@ -615,18 +615,18 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
         });
     };
 
-    this.openPaymentUpdateModel = function (payment) {
+    this.openAccountPaymentUpdateModel = function (accountPayment) {
         return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
-            templateUrl: '/ui/partials/payment/paymentUpdate.html',
-            controller: 'paymentUpdateCtrl',
+            templateUrl: '/ui/partials/accountPayment/accountPaymentUpdate.html',
+            controller: 'accountPaymentUpdateCtrl',
             backdrop: 'static',
             keyboard: false,
             resolve: {
-                payment: function () {
-                    return payment;
+                accountPayment: function () {
+                    return accountPayment;
                 }
             }
         });

@@ -620,7 +620,8 @@ app.controller("menuCtrl", [
             ModalProvider.openMasterCategoryCreateModel().result.then(function (data) {
                 $scope.masterCategories.splice(0, 0, data);
                 $rootScope.refreshTable();
-            }, function () {});
+            }, function () {
+            });
         };
         $scope.deleteMasterCategory = function (masterCategory) {
             ModalProvider.openConfirmModel("حذف التصنيفات", "delete", "هل تود حذف التصنيف فعلاً؟").result.then(function (value) {
@@ -968,7 +969,7 @@ app.controller("menuCtrl", [
                 $scope.offers.splice(0, 0, data);
                 $rootScope.refreshTable();
                 ModalProvider.openConfirmModel("العروض", "print", "هل تود طباعة العرض ؟").result.then(function (value) {
-                    if(value){
+                    if (value) {
                         $scope.printOffer(data);
                     }
                 })
@@ -1098,13 +1099,13 @@ app.controller("menuCtrl", [
                 click: function ($itemScope, $event, value) {
                     var selectedOffers = [];
                     angular.forEach($scope.offers, function (offer) {
-                        if(offer.isSelected){
+                        if (offer.isSelected) {
                             selectedOffers.push(offer);
                         }
                     });
-                    if(selectedOffers.length > 0){
+                    if (selectedOffers.length > 0) {
                         ModalProvider.openOfferSendMessageModel(selectedOffers);
-                    }else{
+                    } else {
                         $rootScope.showNotify('', 'فضلا قم باختيار عرض واحد على الأقل', 'error', '');
                     }
                 }
@@ -1238,7 +1239,7 @@ app.controller("menuCtrl", [
 
                 $scope.itemsCourse = [];
                 $scope.itemsCourse.push({'id': 2, 'type': 'title', 'name': 'الدورات', 'style': 'font-weight:bold'});
-                if(paramCourse.branch){
+                if (paramCourse.branch) {
                     $scope.itemsCourse.push({'id': 3, 'type': 'title', 'name': 'فرع', 'style': 'font-weight:bold'});
                     $scope.itemsCourse.push({
                         'id': 4,
@@ -1392,7 +1393,8 @@ app.controller("menuCtrl", [
             modalInstance.result.then(function (paramStudent) {
                 $scope.paramStudent = paramStudent;
                 $scope.searchStudent($scope.paramStudent);
-            }, function () {});
+            }, function () {
+            });
         };
         $scope.searchStudent = function (paramStudent) {
             var search = [];
@@ -1503,7 +1505,8 @@ app.controller("menuCtrl", [
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();
                 }, 300);
-            }, function () {});
+            }, function () {
+            });
         };
         $scope.newStudentBatch = function () {
             ModalProvider.openStudentCreateBatchModel().result.then(function (data) {
@@ -1511,7 +1514,8 @@ app.controller("menuCtrl", [
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();
                 }, 300);
-            }, function () {});
+            }, function () {
+            });
         };
         $scope.deleteStudent = function (student) {
             ModalProvider.openConfirmModel("حذف الطلاب", "delete", "هل تود حذف التسجيل فعلاً؟").result.then(function (value) {
@@ -1641,7 +1645,8 @@ app.controller("menuCtrl", [
             modalInstance.result.then(function (paramAccount) {
                 $scope.paramAccount = paramAccount;
                 $scope.searchAccount($scope.paramAccount);
-            }, function () {});
+            }, function () {
+            });
         };
         $scope.searchAccount = function (paramAccount) {
             var search = [];
@@ -1739,22 +1744,23 @@ app.controller("menuCtrl", [
                 $scope.pageAccount.last = data.last;
                 $scope.pageAccount.number = data.number;
                 $scope.pageAccount.numberOfElements = data.numberOfElements;
-                $scope.pageAccount.size = data.size;
                 $scope.pageAccount.totalElements = data.totalElements;
                 $scope.pageAccount.totalPages = data.totalPages;
                 $scope.pageAccount.currentPageString = ($scope.pageAccount.page + 1) + ' / ' + $scope.pageAccount.totalPages;
 
                 $scope.itemsAccount = [];
                 $scope.itemsAccount.push({'id': 2, 'type': 'title', 'name': 'تسجيل الطلاب', 'style': 'font-weight:bold'});
-                $scope.itemsAccount.push({'id': 3, 'type': 'title', 'name': 'فرع', 'style': 'font-weight:bold'});
-                $scope.itemsAccount.push({'id': 4, 'type': 'title', 'name': ' [ ' + $scope.paramAccount.branch.code + ' ] ' + $scope.paramAccount.branch.name});
-                if ($scope.paramAccount.master) {
-                    $scope.itemsAccount.push({'id': 5, 'type': 'title', 'name': 'تخصص', 'style': 'font-weight:bold'});
-                    $scope.itemsAccount.push({'id': 6, 'type': 'title', 'name': ' [ ' + $scope.paramAccount.master.code + ' ] ' + $scope.paramAccount.master.name});
+                if (paramAccount.branch) {
+                    $scope.itemsAccount.push({'id': 3, 'type': 'title', 'name': 'فرع', 'style': 'font-weight:bold'});
+                    $scope.itemsAccount.push({'id': 4, 'type': 'title', 'name': ' [ ' + paramAccount.branch.code + ' ] ' + paramAccount.branch.name});
                 }
-                if ($scope.paramAccount.course) {
+                if (paramAccount.master) {
+                    $scope.itemsAccount.push({'id': 5, 'type': 'title', 'name': 'تخصص', 'style': 'font-weight:bold'});
+                    $scope.itemsAccount.push({'id': 6, 'type': 'title', 'name': ' [ ' + paramAccount.master.code + ' ] ' + paramAccount.master.name});
+                }
+                if (paramAccount.course) {
                     $scope.itemsAccount.push({'id': 7, 'type': 'title', 'name': 'رقم الدورة', 'style': 'font-weight:bold'});
-                    $scope.itemsAccount.push({'id': 8, 'type': 'title', 'name': ' [ ' + $scope.paramAccount.course.code + ' ] '});
+                    $scope.itemsAccount.push({'id': 8, 'type': 'title', 'name': ' [ ' + paramAccount.course.code + ' ] '});
                 }
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();
@@ -1774,7 +1780,8 @@ app.controller("menuCtrl", [
             ModalProvider.openAccountCreateModel().result.then(function (data) {
                 $scope.accounts.splice(0, 0, data);
                 $rootScope.refreshTable();
-            }, function () {});
+            }, function () {
+            });
         };
         $scope.newAccountCondition = function (account) {
             ModalProvider.openAccountConditionCreateModel(account).result.then(function (data) {
@@ -1979,8 +1986,8 @@ app.controller("menuCtrl", [
                 animation: true,
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: '/ui/partials/payment/paymentFilter.html',
-                controller: 'paymentFilterCtrl',
+                templateUrl: '/ui/partials/accountPayment/accountPaymentFilter.html',
+                controller: 'accountPaymentFilterCtrl',
                 scope: $scope,
                 backdrop: 'static',
                 keyboard: false,
@@ -1994,7 +2001,8 @@ app.controller("menuCtrl", [
             modalInstance.result.then(function (paramAccountPayment) {
                 $scope.paramAccountPayment = paramAccountPayment;
                 $scope.searchAccountPayment($scope.paramAccountPayment);
-            }, function () {});
+            }, function () {
+            });
         };
         $scope.searchAccountPayment = function (paramAccountPayment) {
 
@@ -2089,11 +2097,6 @@ app.controller("menuCtrl", [
                 search.push(paramAccountPayment.course.id);
                 search.push('&');
             }
-            if (paramAccountPayment.type) {
-                search.push('type=');
-                search.push(paramAccountPayment.type);
-                search.push('&');
-            }
             AccountPaymentService.filter(search.join("")).then(function (data) {
                 $scope.accountPayments = data.content;
 
@@ -2102,18 +2105,27 @@ app.controller("menuCtrl", [
                 $scope.pageAccountPayment.last = data.last;
                 $scope.pageAccountPayment.number = data.number;
                 $scope.pageAccountPayment.numberOfElements = data.numberOfElements;
-                $scope.pageAccountPayment.size = data.size;
                 $scope.pageAccountPayment.totalElements = data.totalElements;
                 $scope.pageAccountPayment.totalPages = data.totalPages;
                 $scope.pageAccountPayment.currentPageString = ($scope.pageAccountPayment.page + 1) + ' / ' + $scope.pageAccountPayment.totalPages;
 
                 $scope.itemsAccountPayment = [];
                 $scope.itemsAccountPayment.push({'id': 2, 'type': 'title', 'name': 'سندات القبض', 'style': 'font-weight:bold'});
-                $scope.itemsAccountPayment.push({'id': 3, 'type': 'title', 'name': 'فرع', 'style': 'font-weight:bold'});
-                $scope.itemsAccountPayment.push({'id': 4, 'type': 'title', 'name': ' [ ' + paramAccountPayment.branch.code + ' ] ' + paramAccountPayment.branch.name});
+                if(paramAccountPayment.branch){
+                    $scope.itemsAccountPayment.push({'id': 3, 'type': 'title', 'name': 'فرع', 'style': 'font-weight:bold'});
+                    $scope.itemsAccountPayment.push({
+                        'id': 4,
+                        'type': 'title',
+                        'name': ' [ ' + paramAccountPayment.branch.code + ' ] ' + paramAccountPayment.branch.name
+                    });
+                }
                 if (paramAccountPayment.master) {
                     $scope.itemsAccountPayment.push({'id': 5, 'type': 'title', 'name': 'تخصص', 'style': 'font-weight:bold'});
-                    $scope.itemsAccountPayment.push({'id': 6, 'type': 'title', 'name': ' [ ' + paramAccountPayment.master.code + ' ] ' + paramAccountPayment.master.name});
+                    $scope.itemsAccountPayment.push({
+                        'id': 6,
+                        'type': 'title',
+                        'name': ' [ ' + paramAccountPayment.master.code + ' ] ' + paramAccountPayment.master.name
+                    });
                 }
                 if (paramAccountPayment.course) {
                     $scope.itemsAccountPayment.push({'id': 7, 'type': 'title', 'name': 'رقم الدورة', 'style': 'font-weight:bold'});

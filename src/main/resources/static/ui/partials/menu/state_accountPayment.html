@@ -5,7 +5,7 @@
                 <li>
                     <a href="" ng-click="openStateMenu()">الرئيسية</a>
                 </li>
-                <li ng-repeat="item in itemsPayment | orderBy:'id' track by item.id">
+                <li ng-repeat="item in itemsAccountPayment | orderBy:'id' track by item.id">
                     <span ng-if="item.type==='title'" style="{{item.style}}">{{item.name}}</span>
                 </li>
             </ul>
@@ -21,30 +21,21 @@
                     for="branch-menu-lower-right">
 
                     <li class="mdl-menu__item mdl-list__item"
-                        ng-click="openFilterPayment();">
+                        ng-click="openFilterAccountPayment();">
                         <span class="mdl-list__item-primary-content">
                             <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/search.{{iconSetType}}" width="24" height="24">
-                            <span>عرض بيانات السندات</span>
+                            <span>بحث</span>
                         </span>
                     </li>
 
                     <div class="mdl-menu__item--full-bleed-divider"></div>
 
                     <li class="mdl-menu__item mdl-list__item"
-                        ng-click="newPayment()"
-                        ng-if="contains(me.team.authorities, ['ROLE_PAYMENT_CREATE'])">
+                        ng-click="newAccountPayment()"
+                        ng-if="contains(me.team.authorities, ['ROLE_ACCOUNT_PAYMENT_CREATE'])">
                         <span class="mdl-list__item-primary-content">
                             <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/add.{{iconSetType}}" width="24" height="24">
                             <span>سند قبض</span>
-                        </span>
-                    </li>
-
-                    <li class="mdl-menu__item mdl-list__item"
-                        ng-click="ModalProvider.openPaymentHeavyWorkModel()"
-                        ng-if="contains(me.team.authorities, ['ROLE_PAYMENT_CREATE'])">
-                        <span class="mdl-list__item-primary-content">
-                            <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/group.{{iconSetType}}" width="24" height="24">
-                            <span>دفعة من السندات</span>
                         </span>
                     </li>
 
@@ -63,14 +54,20 @@
                 style="margin-top: 2px;">
                 <li>
                     <a href=""
-                       ng-click="openFilterPayment()"
+                       ng-click="searchAccountPayment(paramAccountPayment)"
+                       tooltip-append-to-body="true"
+                       uib-tooltip="تحديث">
+                        <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/refresh.{{iconSetType}}" width="24" height="24">
+                    </a>
+                    <a href=""
+                       ng-click="openFilterAccountPayment()"
                        tooltip-append-to-body="true"
                        uib-tooltip="بحث">
                         <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/search.{{iconSetType}}" width="24" height="24">
                     </a>
                     <a href=""
-                       ng-if="contains(me.team.authorities, ['ROLE_PAYMENT_CREATE'])"
-                       ng-click="newPayment()"
+                       ng-if="contains(me.team.authorities, ['ROLE_ACCOUNT_PAYMENT_CREATE'])"
+                       ng-click="newAccountPayment()"
                        tooltip-append-to-body="true"
                        uib-tooltip="سند جديد">
                         <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/add.{{iconSetType}}" width="24" height="24">
@@ -83,33 +80,7 @@
         </div>
         <div class="panel-body">
 
-            <div class="form-group row">
-                <button uib-tooltip="تقرير مفصل"
-                        tooltip-append-to-body="true"
-                        type="button"
-                        ng-click="printList()"
-                        ng-show="accountPayments.length > 0"
-                        class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                    <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/report-one.{{iconSetType}}" width="24" height="24">
-                </button>
-                <button uib-tooltip="تقرير مختصر"
-                        tooltip-append-to-body="true"
-                        type="button"
-                        ng-click="printListSummery()"
-                        ng-show="accountPayments.length > 0"
-                        class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
-                    <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/report-one.{{iconSetType}}" width="24" height="24">
-                </button>
-                <button uib-tooltip="طباعة الجدول"
-                        tooltip-append-to-body="true"
-                        type="button"
-                        ng-click="printToCart('printThisElement')"
-                        class="mdl-button mdl-js-button mdl-js-ripple-effect">
-                    <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/print.{{iconSetType}}" width="24" height="24">
-                </button>
-            </div>
-
-            <div class="form-group row" ng-if="pagePayment.totalElements > 0">
+            <div class="form-group row" ng-if="pageAccountPayment.totalElements > 0">
 
                 <div class="btn-toolbar pull-right">
 
@@ -117,9 +88,9 @@
 
                         <button uib-tooltip="السابق"
                                 tooltip-append-to-body="true"
-                                ng-disabled="pagePayment.first"
+                                ng-disabled="pageAccountPayment.first"
                                 type="button"
-                                ng-click="selectPrevPaymentsPage()"
+                                ng-click="selectPrevAccountPaymentsPage()"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1 pull-right">
                             <i class="material-icons">keyboard_arrow_right</i>
                         </button>
@@ -129,14 +100,14 @@
                                    type="text"
                                    readonly
                                    class="form-control"
-                                   ng-model="pagePayment.currentPageString">
+                                   ng-model="pageAccountPayment.currentPageString">
                         </div>
 
                         <button uib-tooltip="التالي"
                                 tooltip-append-to-body="true"
-                                ng-disabled="pagePayment.last"
+                                ng-disabled="pageAccountPayment.last"
                                 type="button"
-                                ng-click="selectNextPaymentsPage()"
+                                ng-click="selectNextAccountPaymentsPage()"
                                 class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1 pull-right">
                             <i class="material-icons">keyboard_arrow_left</i>
                         </button>
@@ -151,13 +122,13 @@
                            class="form-control"
                            placeholder="بحث سريع"
                            ng-change="refreshGUI()"
-                           ng-model="paramPaymentIn.searchText">
+                           ng-model="paramAccountPayment.searchText">
 
                 </div>
 
             </div>
 
-            <div class="form-group row" id="printThisElement">
+            <div class="form-group row">
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
@@ -165,8 +136,8 @@
                         <tr>
 
                             <th class="fit no-print">
-                                <label id ="checkAllPayments" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-0">
-                                    <input type="checkbox" id="checkbox-0" class="mdl-checkbox__input" ng-model="accountPayments.checkAll" ng-change="checkAllPayments()">
+                                <label id ="checkAllAccountPayments" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-0">
+                                    <input type="checkbox" id="checkbox-0" class="mdl-checkbox__input" ng-model="accountPayments.checkAll" ng-change="checkAllAccountPayments()">
                                 </label>
                             </th>
 
@@ -179,27 +150,11 @@
                             </th>
 
                             <th>
-                                <span>تاريخ السند</span>
+                                <span>التاريخ</span>
                             </th>
 
                             <th>
-                                <span>طريقة الدفع</span>
-                            </th>
-
-                            <th>
-                                <span>قيمة السند</span>
-                            </th>
-
-                            <th>
-                                <span>نوع السند</span>
-                            </th>
-
-                            <th>
-                                <span>رقم الطالب</span>
-                            </th>
-
-                            <th>
-                                <span>اسم الطالب</span>
+                                <span>الطالب</span>
                             </th>
 
                             <th>
@@ -207,18 +162,22 @@
                             </th>
 
                             <th>
-                                <span>بيان السند</span>
+                                <span>المبلغ</span>
                             </th>
 
                             <th>
-                                <span>مدخل السند</span>
+                                <span>البيان</span>
+                            </th>
+
+                            <th>
+                                <span>بواسطة</span>
                             </th>
 
                         </tr>
                         </thead>
                         <tbody>
                         <tr
-                            ng-repeat="accountPayment in filteredPayments = (accountPayments | filter:paramPaymentIn.searchText)"
+                            ng-repeat="accountPayment in filteredPayments = (accountPayments | filter:paramAccountPayment.searchText)"
                             ng-class="{'mdl-color--grey-400' : accountPayment.isSelected}"
                             context-menu="rowMenuPayment">
                             <td class="fit no-print">
@@ -228,43 +187,29 @@
                             </td>
                             <td>{{$index+1}}</td>
                             <td>{{accountPayment.code}}</td>
-                            <td class="fit">
+                            <td>
                                 <span ng-class="{'no-print': dateType==='G'}" ng-show="dateType==='H'">{{accountPayment.date | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
                                 <span ng-class="{'no-print': dateType==='H'}" ng-show="dateType==='G'">{{accountPayment.date | date: 'yyyy-MM-dd'}}</span>
+                                <br/>
                                 <span class="label label-success">{{accountPayment.date | date: 'hh:mm a'}}</span>
                             </td>
-                            <td>{{accountPayment.paymentMethodInArabic}}</td>
-                            <td>{{accountPayment.amountNumber}}</td>
-                            <td>{{accountPayment.type}}</td>
-                            <td class="fit">{{accountPayment.account.key}}</td>
-                            <td>{{accountPayment.account.name}}</td>
-                            <td>
-                                <span class="label label-info">{{accountPayment.account.course.master.masterCategory.name}}</span>
-                                [ {{accountPayment.account.course.master.code}} ] {{accountPayment.account.course.master.name}}
-                            </td>
+                            <td>{{accountPayment.account.student.contact.fullName}}</td>
+                            <td>{{accountPayment.account.course.master.name}}</td>
+                            <td>{{accountPayment.amount}}</td>
                             <td>{{accountPayment.note}}</td>
-                            <td>
-                                {{accountPayment.lastPerson.contact.shortName}}
-                            </td>
-                        </tr>
-                        <tr ng-show="filteredPayments.length > 0">
-                            <td colspan="6">
-                                <h3 class="text-center box-success">
-                                    <span>عدد السندات = </span>
-                                    <span>{{filteredPayments.length}}</span>
-                                </h3>
-                            </td>
-
-                            <td colspan="6">
-                                <h3 class="text-center box-info">
-                                    <span>إجمالي الإيرادات = </span>
-                                    <span>{{filteredPayments | sumByKey:'amountNumber' | currency:' SAR ':2}}</span>
-                                </h3>
-                            </td>
+                            <td>{{accountPayment.person.contact.shortName}}</td>
                         </tr>
                         <tr class="blank_row no-print" style="height: 10px !important; background-color: #FFFFFF;"
                             ng-show="!filteredPayments || filteredPayments.length ==0">
                             <td colspan="12">لا توجد بيانات</td>
+                        </tr>
+                        <tr ng-if="filteredPayments.length > 0">
+                            <td class="info" colspan="6">
+                                <span class="pull-left">المجموع الكلي(جميع القيم بالريال السعودي)</span>
+                            </td>
+                            <td class="success" colspan="1">{{filteredPayments | sumByKey:'amount' | currency:'':2}}</td>
+                            <td colspan="1"></td>
+                            <td colspan="1"></td>
                         </tr>
                         </tbody>
                     </table>

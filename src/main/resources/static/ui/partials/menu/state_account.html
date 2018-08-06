@@ -84,7 +84,7 @@
                 style="margin-top: 2px;">
                 <li>
                     <a href=""
-                       ng-click="searchAccount({})"
+                       ng-click="searchAccount(paramAccount)"
                        tooltip-append-to-body="true"
                        uib-tooltip="تحديث">
                         <img class="material-icons mdl-list__item-icon" ng-src="/ui/img/{{iconSet}}/refresh.{{iconSetType}}" width="24" height="24">
@@ -253,7 +253,7 @@
                             <td>{{account.net | currency:' ':2}}</td>
                             <td>{{account.paid | currency:' ':2}}</td>
                             <td>{{account.remain | currency:' ':2}}</td>
-                            <td>
+                            <td ng-class="{'danger': !account.lastPaymentDate}">
                                 <span ng-show="dateType==='H'">{{account.lastPaymentDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
                                 <span ng-show="dateType==='G'">{{account.lastPaymentDate | date: 'yyyy-MM-dd'}}</span>
                                 <br/>

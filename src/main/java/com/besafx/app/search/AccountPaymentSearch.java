@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
@@ -37,6 +38,9 @@ public class AccountPaymentSearch {
             final String forthName,
             final String studentIdentityNumber,
             final String studentMobile,
+            final Long course,
+            final Long master,
+            final Long branch,
             final String filterCompareType,
             Pageable pageRequest) {
 
@@ -53,6 +57,9 @@ public class AccountPaymentSearch {
         Optional.ofNullable(forthName).ifPresent(value -> predicates.add((root, cq, cb) -> cb.like(root.get("account").get("student").get("contact").get("forthName"), "%" + value.trim() + "%")));
         Optional.ofNullable(studentIdentityNumber).ifPresent(value -> predicates.add((root, cq, cb) -> cb.like(root.get("account").get("student").get("contact").get("identityNumber"), "%" + value.trim() + "%")));
         Optional.ofNullable(studentMobile).ifPresent(value -> predicates.add((root, cq, cb) -> cb.like(root.get("account").get("student").get("contact").get("mobile"), "%" + value.trim() + "%")));
+        Optional.ofNullable(course).ifPresent(value -> predicates.add((root, cq, cb) -> cb.equal(root.get("account").get("course").get("id"), value)));
+        Optional.ofNullable(master).ifPresent(value -> predicates.add((root, cq, cb) -> cb.equal(root.get("account").get("course").get("master").get("id"), value)));
+        Optional.ofNullable(branch).ifPresent(value -> predicates.add((root, cq, cb) -> cb.equal(root.get("account").get("course").get("master").get("branch").get("id"), value)));
 
         if (!predicates.isEmpty()) {
             Specification result = predicates.get(0);
@@ -67,7 +74,7 @@ public class AccountPaymentSearch {
             }
             return accountPaymentService.findAll(result, pageRequest);
         } else {
-            return accountPaymentService.findAll(pageRequest);
+            return new PageImpl<>(new ArrayList<>());
         }
     }
 }

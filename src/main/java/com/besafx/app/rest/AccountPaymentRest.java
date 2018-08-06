@@ -3,13 +3,13 @@ package com.besafx.app.rest;
 import com.besafx.app.auditing.EntityHistoryListener;
 import com.besafx.app.auditing.PersonAwareUserDetails;
 import com.besafx.app.config.CustomException;
-import com.besafx.app.entity.BankTransaction;
 import com.besafx.app.entity.AccountPayment;
+import com.besafx.app.entity.BankTransaction;
 import com.besafx.app.entity.Person;
 import com.besafx.app.init.Initializer;
 import com.besafx.app.search.AccountPaymentSearch;
-import com.besafx.app.service.BankTransactionService;
 import com.besafx.app.service.AccountPaymentService;
+import com.besafx.app.service.BankTransactionService;
 import com.besafx.app.util.DateConverter;
 import com.besafx.app.ws.Notification;
 import com.besafx.app.ws.NotificationDegree;
@@ -37,7 +37,7 @@ public class AccountPaymentRest {
 
     private final String FILTER_TABLE = "" +
             "**," +
-            "account[id,contact[id,shortName]]," +
+            "account[id,code,course[id,master[id,name]],student[id,contact[id,fullName]]]," +
             "-bankTransaction," +
             "person[id,contact[id,shortName]]";
 
@@ -176,6 +176,9 @@ public class AccountPaymentRest {
             @RequestParam(value = "forthName", required = false) final String forthName,
             @RequestParam(value = "studentIdentityNumber", required = false) final String studentIdentityNumber,
             @RequestParam(value = "studentMobile", required = false) final String studentMobile,
+            @RequestParam(value = "course", required = false) final Long course,
+            @RequestParam(value = "master", required = false) final Long master,
+            @RequestParam(value = "branch", required = false) final Long branch,
             @RequestParam(value = "filterCompareType", required = false) final String filterCompareType,
             Pageable pageable) {
         return SquigglyUtils.stringify(
@@ -193,6 +196,9 @@ public class AccountPaymentRest {
                         forthName,
                         studentIdentityNumber,
                         studentMobile,
+                        course,
+                        master,
+                        branch,
                         filterCompareType,
                         pageable));
     }
