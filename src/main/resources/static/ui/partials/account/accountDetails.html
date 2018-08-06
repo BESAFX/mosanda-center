@@ -62,25 +62,25 @@
             <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
 
                 <div class="mdl-tabs__tab-bar">
-                    <a href="#panel-1-account" class="mdl-tabs__tab col-xs-3 col-sm-3 col-md-3 col-lg-3 is-active">
+                    <a href="#panel-1-account" class="mdl-tabs__tab col-xs-3 col-sm-4 col-md-4 col-lg-4 is-active">
                         <span>بيانات الطالب</span>
                     </a>
-                    <a href="#panel-2-account" class="mdl-tabs__tab col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <a href="#panel-2-account" class="mdl-tabs__tab col-xs-3 col-sm-4 col-md-4 col-lg-4">
                         <span>بيانات الدورة</span>
                     </a>
-                    <a href="#panel-3-account" class="mdl-tabs__tab col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <a href="#panel-3-account" class="mdl-tabs__tab col-xs-3 col-sm-4 col-md-4 col-lg-4">
                         <span>المستندات</span>
                     </a>
                 </div>
 
                 <div class="mdl-tabs__tab-bar">
-                    <a href="#panel-4-account" class="mdl-tabs__tab col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <a href="#panel-4-account" class="mdl-tabs__tab col-xs-3 col-sm-4 col-md-4 col-lg-4">
                         <span>حالة الطالب</span>
                     </a>
-                    <a href="#panel-5-account" class="mdl-tabs__tab col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <a href="#panel-5-account" class="mdl-tabs__tab col-xs-3 col-sm-4 col-md-4 col-lg-4">
                         <span>السداد</span>
                     </a>
-                    <a href="#panel-6-account" class="mdl-tabs__tab col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <a href="#panel-6-account" class="mdl-tabs__tab col-xs-3 col-sm-4 col-md-4 col-lg-4">
                         <span>الملاحظات</span>
                     </a>
                 </div>
@@ -358,38 +358,31 @@
 
                     <div class="form-group row">
                         <div class="table-responsive">
-                            <table st-table="collectionPayments" st-safe-src="account.accountPayments" class="table table-bordered">
+                            <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th st-sort="code">رقم السند</th>
-                                    <th st-sort="date" st-sort-default="reverse">تاريخ السند</th>
-                                    <th st-sort="amountNumber">قية السند</th>
-                                    <th st-sort="type">نوع الإيراد</th>
-                                    <th st-sort="lastPerson">مدخل السند</th>
+                                    <th>رقم السند</th>
+                                    <th>تاريخ السند</th>
+                                    <th>قية السند</th>
+                                    <th>البيان</th>
+                                    <th>بواسطة</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="accountPayment in collectionPayments">
+                                <tr ng-repeat="accountPayment in account.accountPayments">
+                                    <td>{{accountPayment.code}}</td>
                                     <td>
-                                        {{accountPayment.code}}
-                                        <span class="fa fa-info-circle"
-                                              tooltip-append-to-body="true"
-                                              uib-tooltip="{{accountPayment.note}}"></span>
+                                        <span ng-show="dateType==='H'">{{accountPayment.date | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                        <span ng-show="dateType==='G'">{{accountPayment.date | date: 'yyyy-MM-dd'}}</span>
+                                        <br/>
+                                        <span class="label label-success">{{accountPayment.date | date: 'hh:mm a'}}</span>
                                     </td>
-                                    <td>
-                                        <span>{{accountPayment.date | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
-                                        <span class="label label-success">{{accountPayment.date | date:'h:m a'}}</span>
-                                    </td>
-                                    <td>
-                                        {{accountPayment.amountNumber | currency:' SAR ':2}}
-                                        <span class="label label-warning">{{accountPayment.amountString}}</span>
-                                    </td>
-                                    <td>{{accountPayment.type}}</td>
-                                    <td>
-                                        {{accountPayment.lastPerson.contact.shortName}}
-                                    </td>
+                                    <td>{{accountPayment.amount | currency:' ':2}}</td>
+                                    <td>{{accountPayment.note}}</td>
+                                    <td>{{accountPayment.person.contact.shortName}}</td>
                                 </tr>
-                                <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;" ng-show="!collectionPayments || collectionPayments.length ==0">
+                                <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
+                                    ng-show="!account.accountPayments || account.accountPayments.length ==0">
                                     <td colspan="5">لا توجد دفعات حتى الآن</td>
                                 </tr>
                                 </tbody>

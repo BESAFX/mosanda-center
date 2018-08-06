@@ -50,6 +50,7 @@ public class AccountRest {
             "net," +
             "paid," +
             "remain," +
+            "lastPaymentDate," +
             "course[id,code,master[id,code,name,branch[id,code,name]]]," +
             "student[id,contact[id,shortName,fullName,mobile,identityNumber]]";
 

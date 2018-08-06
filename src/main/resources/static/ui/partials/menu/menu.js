@@ -1606,7 +1606,6 @@ app.controller("menuCtrl", [
          *                                                                                                            *
          **************************************************************************************************************/
         $scope.paramAccount = {};
-        $scope.accountToUploadAttaches = {};
         $scope.accounts = [];
         $scope.accounts.checkAll = false;
         $scope.itemsAccount = [];
