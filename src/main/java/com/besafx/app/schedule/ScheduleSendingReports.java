@@ -69,13 +69,13 @@ public class ScheduleSendingReports {
             fileName.append(DateConverter.getNowFileName());
             fileName.append(".zip");
 
-            Future<Boolean> uploadTask = dropboxManager.uploadFile(new ByteArrayInputStream(bytes), fileName.toString(), "/Smart Offer/Reports/" +
+            Future<Boolean> uploadTask = dropboxManager.uploadFile(new ByteArrayInputStream(bytes), fileName.toString(), "/Mosanda-Center/Reports/" +
                     fileName.toString());
 
             if (uploadTask.get()) {
                 log.info("Ending uploading file");
                 log.info("Starting sending message");
-                Future<String> uploadFileLinkTask = dropboxManager.shareFile("/Smart Offer/Reports/" + fileName.toString());
+                Future<String> uploadFileLinkTask = dropboxManager.shareFile("/Mosanda-Center/Reports/" + fileName.toString());
                 uploadFileLinkTask.get();
 
                 String subject = "", title = "", subTitle = "";

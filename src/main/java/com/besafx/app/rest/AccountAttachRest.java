@@ -25,7 +25,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -86,7 +85,7 @@ public class AccountAttachRest {
                 attach.setDate(new DateTime().toDate());
                 attach.setPerson(personService.findByEmail(caller.getEmail()));
 
-                Future<Boolean> uploadTask = dropboxManager.uploadFile(file, "/Smart Offer/Accounts/" + account.getId() + "/" + file.getOriginalFilename());
+                Future<Boolean> uploadTask = dropboxManager.uploadFile(file, "/Mosanda-Center/Accounts/" + account.getId() + "/" + file.getOriginalFilename());
                 Boolean result = null;
                 try {
                     result = uploadTask.get();
@@ -96,7 +95,7 @@ public class AccountAttachRest {
                 if (result) {
                     String link = null;
                     try {
-                        link = dropboxManager.shareFile("/Smart Offer/Accounts/" + account.getId() + "/" + file.getOriginalFilename()).get();
+                        link = dropboxManager.shareFile("/Mosanda-Center/Accounts/" + account.getId() + "/" + file.getOriginalFilename()).get();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -137,8 +136,8 @@ public class AccountAttachRest {
             @PathVariable(value = "name") String name) throws Exception {
         AccountAttach accountAttach = accountAttachService.findOne(accountAttachId);
         if (accountAttach != null) {
-            String oldPath = "/Smart Offer/Accounts/" + accountAttach.getAccount().getId() + "/" + accountAttach.getAttach().getName();
-            String newPath = "/Smart Offer/Accounts/" + accountAttach.getAccount().getId() + "/" + name;
+            String oldPath = "/Mosanda-Center/Accounts/" + accountAttach.getAccount().getId() + "/" + accountAttach.getAttach().getName();
+            String newPath = "/Mosanda-Center/Accounts/" + accountAttach.getAccount().getId() + "/" + name;
             dropboxManager.renameFile(oldPath, newPath).get();
             accountAttach.getAttach().setName(name);
             accountAttach = accountAttachService.save(accountAttach);
@@ -155,7 +154,7 @@ public class AccountAttachRest {
     public Boolean delete(@PathVariable Long id) throws ExecutionException, InterruptedException {
         AccountAttach accountAttach = accountAttachService.findOne(id);
         if (accountAttach != null) {
-            Future<Boolean> deleteTask = dropboxManager.deleteFile("/Smart Offer/Accounts/" + accountAttach.getAccount().getId() + "/" + accountAttach.getAttach().getName());
+            Future<Boolean> deleteTask = dropboxManager.deleteFile("/Mosanda-Center/Accounts/" + accountAttach.getAccount().getId() + "/" + accountAttach.getAttach().getName());
             if (deleteTask.get()) {
                 accountAttachService.delete(accountAttach);
                 notificationService.notifyAll(Notification.builder().message("تم حذف الملف" + " [ " + accountAttach.getAttach().getName() + " ] " + " بنجاح.").type(NotificationDegree.success).build());
