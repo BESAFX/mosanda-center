@@ -2149,11 +2149,11 @@ app.controller("menuCtrl", [
                 $scope.accountPayments.splice(0, 0, data);
             });
         };
-        $scope.deletePayment = function (payment) {
+        $scope.deleteAccountPayment = function (accountPayment) {
             ModalProvider.openConfirmModel("سندات القبض", 'trash', "هل تود حذف سند القبض فعلاً؟").result.then(function (value) {
                 if (value) {
-                    AccountPaymentService.remove(payment.id).then(function () {
-                        var index = $scope.accountPayments.indexOf(payment);
+                    AccountPaymentService.remove(accountPayment.id).then(function () {
+                        var index = $scope.accountPayments.indexOf(accountPayment);
                         $scope.accountPayments.splice(index, 1);
                     });
                 }
@@ -2166,10 +2166,10 @@ app.controller("menuCtrl", [
                 '<span>جديد...</span>' +
                 '</div>',
                 enabled: function () {
-                    return true
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_ACCOUNT_PAYMENT_CREATE']);
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.newPayment();
+                    $scope.newAccountPayment();
                 }
             },
             {
@@ -2178,10 +2178,10 @@ app.controller("menuCtrl", [
                 '<span>تعديل...</span>' +
                 '</div>',
                 enabled: function () {
-                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_PAYMENT_UPDATE']);
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_ACCOUNT_PAYMENT_UPDATE']);
                 },
                 click: function ($itemScope, $event, value) {
-                    ModalProvider.openPaymentUpdateModel($itemScope.payment);
+                    ModalProvider.openAccountPaymentUpdateModel($itemScope.accountPayment);
                 }
             },
             {
@@ -2190,22 +2190,10 @@ app.controller("menuCtrl", [
                 '<span>حذف...</span>' +
                 '</div>',
                 enabled: function () {
-                    return true
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_ACCOUNT_PAYMENT_DELETE']);
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.deletePayment($itemScope.payment);
-                }
-            },
-            {
-                html: '<div class="drop-menu">' +
-                '<img src="/ui/img/' + $rootScope.iconSet + '/print.' + $rootScope.iconSetType + '" width="24" height="24">' +
-                '<span>طباعة</span>' +
-                '</div>',
-                enabled: function () {
-                    return true
-                },
-                click: function ($itemScope, $event, value) {
-                    window.open('report/CashReceipt/' + $itemScope.payment.id);
+                    $scope.deleteAccountPayment($itemScope.accountPayment);
                 }
             }
         ];
